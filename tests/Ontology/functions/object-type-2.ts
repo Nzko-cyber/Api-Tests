@@ -14,7 +14,7 @@ export async function getObjectTypesWithPagination(queryParams: any, projectId: 
         return response;
     } catch (error) {
         console.error("❌ Error fetching paginated ObjectTypes:", error);
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -30,7 +30,7 @@ export async function getObjectTypeGraph(projectId: string, groupId: string) {
         return response;
     } catch (error) {
         console.error("❌ Error fetching ObjectType Graph:", error);
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -45,7 +45,7 @@ export async function getObjectTypesByGroup(projectId: string, groupId: string) 
         return response;
     } catch (error) {
         console.error("❌ Error fetching ObjectTypes:", error);
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -61,6 +61,6 @@ export async function getObjectTypePreview(projectId: string, objectTypeId: stri
         return response;
     } catch (error) {
         console.error("❌ Error fetching ObjectType Preview:", error);
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }

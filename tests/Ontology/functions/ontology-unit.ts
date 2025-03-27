@@ -1,6 +1,6 @@
 import pactum from 'pactum';
 
-import('../pactum.config');
+import('../../../pactum.config');
 
 let baseURL: string = '/ontology/api';
 
@@ -18,7 +18,7 @@ async function getDataSet(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -47,7 +47,7 @@ async function previewDataSet(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -78,7 +78,7 @@ async function getOTGWithPagination(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -113,7 +113,7 @@ async function getOTGWithGraph(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -145,7 +145,7 @@ async function createObjectTypeGroup(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -170,7 +170,7 @@ async function getObjectTypeGroup(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -198,7 +198,7 @@ async function updateObjectTypeGroup(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -223,7 +223,7 @@ async function deleteObjectTypeGroup(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -248,7 +248,7 @@ async function getSearchOverview(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -273,7 +273,7 @@ async function getValueTypes(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
