@@ -24,8 +24,18 @@ let en: TestData = {
 let response: any;
 
 describe('API_BACKEND::PROJECT EXPLORER::File', () => {
+    beforeEach(() => {
+        allure.epic("Project Explorer");
+        allure.feature("Analysis API Tests");
+        allure.owner("QA Team");
+    });
     describe('1 - Uploading File :: Post /project-explorer/api/File/upload', () => {
+        allure.story("Upload a file to the project explorer");
+        
         it('1.1 - Upload: Successfully uploads a valid file', async () => {
+            allure.story("Successfully uploads a valid file");
+            allure.description("This test validates that a file can be uploaded to the project explorer");
+            
             response = await uploadFile(en.fileSource, en.project1Id);
             console.log(response);
             expect(response.statusCode).toBe(200);
@@ -36,6 +46,9 @@ describe('API_BACKEND::PROJECT EXPLORER::File', () => {
         });
 
         it('1.2 - Upload: Fails when no file is provided', async () => {
+            allure.story("Fails when no file is provided");
+            allure.description("This test validates that an error is returned when no file is provided");
+            
             response = await uploadFile(null as any, en.project1Id);
             console.log(response.body);
             expect(response.statusCode).toBe(400);
@@ -44,6 +57,9 @@ describe('API_BACKEND::PROJECT EXPLORER::File', () => {
         });
 
         it('1.3 - Upload: Fails with an invalid Project ID', async () => {
+            allure.story("Fails with an invalid Project ID");
+            allure.description("This test validates that an error is returned when an invalid project ID is provided");
+            
             response = await uploadFile(en.fileSource, en.invalidID);
             console.log(response.body);
             expect(response.statusCode).toBe(400);
@@ -52,6 +68,9 @@ describe('API_BACKEND::PROJECT EXPLORER::File', () => {
         });
 
         it('1.4 - Upload: Fails with an unsupported file type', async () => {
+            allure.story("Fails with an unsupported file type");
+            allure.description("This test validates that an error is returned when an unsupported file type is provided");
+            
             response = await uploadFile('tests/sources/1.1-MB-1.jpg', en.project1Id);
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe('One or more validation errors occurred.');
@@ -60,13 +79,21 @@ describe('API_BACKEND::PROJECT EXPLORER::File', () => {
     });
 
     describe('2 - Creating File :: Post /project-explorer/api/File', () => {
+        allure.story("Create a file in the project explorer");
+        
         it('2.1 - Create: Successfully processes a valid file', async () => {
+            allure.story("Successfully processes a valid file");
+            allure.description("This test validates that a file can be processed in the project explorer");
+            
             response = await createFile(en.file1Id!, en.file1Name!, en.project1Id, en.folder1Id);
             expect(response.statusCode).toBe(200);
             en.file2Id = response.body;
         });
 
         it('2.3 - Create: Fails when the option field is missing', async () => {
+            allure.story("Fails when the option field is missing");
+            allure.description("This test validates that an error is returned when the option field is missing");
+            
             response = await createFile(en.file1Id!, en.file1Name!, en.project1Id, en.folder1Id, null as any);
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe('One or more validation errors occurred.');
@@ -74,6 +101,9 @@ describe('API_BACKEND::PROJECT EXPLORER::File', () => {
         });
 
         it('2.4 - Create: Fails with an invalid File ID', async () => {
+            allure.story("Fails with an invalid File ID");
+            allure.description("This test validates that an error is returned when an invalid file ID is provided");
+            
             response = await createFile(en.invalidID, en.file1Name!, en.project1Id, en.folder1Id);
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe('One or more validation errors occurred.');
@@ -81,6 +111,9 @@ describe('API_BACKEND::PROJECT EXPLORER::File', () => {
         });
 
         it('2.5 - Create: Fails with an invalid Project ID', async () => {
+            allure.story("Fails with an invalid Project ID");
+            allure.description("This test validates that an error is returned when an invalid project ID is provided");
+            
             response = await createFile(en.file1Id!, en.file1Name!, en.invalidID, en.folder1Id);
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe('One or more validation errors occurred.');
@@ -88,6 +121,9 @@ describe('API_BACKEND::PROJECT EXPLORER::File', () => {
         });
 
         it('2.6 - Create: Fails with an invalid Folder ID', async () => {
+            allure.story("Fails with an invalid Folder ID");
+            allure.description("This test validates that an error is returned when an invalid folder ID is provided");
+            
             response = await createFile(en.file1Id!, en.file1Name!, en.project1Id, en.invalidID);
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe('One or more validation errors occurred.');
@@ -96,12 +132,20 @@ describe('API_BACKEND::PROJECT EXPLORER::File', () => {
     });
 
     describe('3 - Getting File :: Get /project-explorer/api/File/download', () => {
+        allure.story("Get a file from the project explorer");
+        
         it('3.1 - Get: Successfully retrieves a valid file', async () => {
+            allure.story("Successfully retrieves a valid file");
+            allure.description("This test validates that a file can be retrieved from the project explorer");
+            
             response = await getFile(en.file1Id!, en.project1Id);
             expect(response.statusCode).toBe(200);
         });
 
         it('3.2 - Get: Fails with an invalid File ID', async () => {
+            allure.story("Fails with an invalid File ID");
+            allure.description("This test validates that an error is returned when an invalid file ID is provided");
+            
             response = await getFile(en.invalidID, en.project1Id);
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe('One or more validation errors occurred.');
@@ -109,6 +153,9 @@ describe('API_BACKEND::PROJECT EXPLORER::File', () => {
         });
 
         it('3.3 - Get: Fails with an invalid Project ID', async () => {
+            allure.story("Fails with an invalid Project ID");
+            allure.description("This test validates that an error is returned when an invalid project ID is provided");
+            
             response = await getFile(en.file2Id!, en.invalidID);
             console.log(response);
             expect(response.statusCode).toBe(400);
@@ -117,6 +164,9 @@ describe('API_BACKEND::PROJECT EXPLORER::File', () => {
         });
 
         it('3.4 - Get: Fails when File ID is missing', async () => {
+            allure.story("Fails when File ID is missing");
+            allure.description("This test validates that an error is returned when the File ID is missing");
+            
             response = await getFile(null as any, en.project1Id);
             console.log(response.body);
             expect(response.statusCode).toBe(400);
@@ -125,6 +175,9 @@ describe('API_BACKEND::PROJECT EXPLORER::File', () => {
         });
 
         it('3.5 - Get: Fails when Project ID is missing', async () => {
+            allure.story("Fails when Project ID is missing");
+            allure.description("This test validates that an error is returned when the Project ID is missing");
+            
             response = await getFile(en.file2Id!);
             console.log(response.body);
             expect(response.statusCode).toBe(400);
@@ -134,17 +187,29 @@ describe('API_BACKEND::PROJECT EXPLORER::File', () => {
     });
 
     describe('4 - Deleting File :: Delete /project-explorer/api/ProjectExplorer/DeleteResource?id=${id}', () => {
+        allure.story("Delete a file from the project explorer");
+        allure.description("This test validates that a file can be deleted from the project explorer");
+        
         it('4.1 - Delete: Successfully deletes the first file', async () => {
+            allure.story("Successfully deletes the first file");
+            allure.description("This test validates that a file can be deleted from the project explorer");
+            
             response = await deleteFile(en.file1Id!, en.project1Id);
             expect(response.statusCode).toBe(200);
         });
 
         it('4.2 - Delete: Successfully deletes the second file', async () => {
+            allure.story("Successfully deletes the second file");
+            allure.description("This test validates that a file can be deleted from the project explorer");
+            
             response = await deleteFile(en.file2Id!, en.project1Id);
             expect(response.statusCode).toBe(200);
         });
 
         it('4.3 - Delete: Fails when file does not exist', async () => {
+            allure.story("Fails when file does not exist");
+            allure.description("This test validates that an error is returned when the file does not exist");
+            
             response = await deleteFile(en.nonExistentID, en.project1Id);
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe('One or more validation errors occurred.');
@@ -152,6 +217,9 @@ describe('API_BACKEND::PROJECT EXPLORER::File', () => {
         });
 
         it('4.4 - Delete: Fails with an invalid Project ID', async () => {
+            allure.story("Fails with an invalid Project ID");
+            allure.description("This test validates that an error is returned when an invalid project ID is provided");
+            
             response = await deleteFile(en.file2Id!, en.invalidID);
             console.log(response);
             expect(response.statusCode).toBe(400);

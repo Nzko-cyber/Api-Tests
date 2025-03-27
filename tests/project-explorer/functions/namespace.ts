@@ -62,9 +62,7 @@ async function createNamespace(
     }
 }
 
-async function getNamespace(
-    id: string | null = null,
-) {
+async function getNamespace(id: string | null = null) {
     try {
         let spec: import("pactum/src/models/Spec");
         if (id === null) {
@@ -77,14 +75,14 @@ async function getNamespace(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return { error: true, message: error.message, details: error };
     }
 }
 
 async function updateNamespace(
-    id: string = null,
-    name: string = null,
-    description: string = null,
+    id?: any,
+    name: any = null,
+    description?: any,
     customParams: Record<string, any> = {},
 ) {
     try {
@@ -100,7 +98,7 @@ async function updateNamespace(
         const response = await spec.toss();
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return { error: true, message: error.message, details: error };
     }
 }
 
