@@ -37,7 +37,7 @@ describe('API_BACKEND::PROJECT EXPLORER::File', () => {
             allure.description("This test validates that a file can be uploaded to the project explorer");
             
             response = await uploadFile(en.fileSource, en.project1Id);
-            console.log(response);
+            allure.attachment('Upload Response', JSON.stringify(response.body, null, 2), 'application/json');
             expect(response.statusCode).toBe(200);
             expect(response.body).toHaveProperty('fileId');
             expect(response.body).toHaveProperty('fileName');
