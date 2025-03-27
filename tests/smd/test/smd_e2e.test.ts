@@ -1,29 +1,41 @@
-import {deleteSemanticModel, getSemanticModel, postSemanticModel, updateSemanticModel} from "./SMD_util";
-import {mockSemanticModelPostRequest, mockSemanticModelPutRequest} from "./mockData";
+import { deleteSemanticModel, getSemanticModel, postSemanticModel, updateSemanticModel } from "../functions/SMD_util";
+import { mockSemanticModelPostRequest, mockSemanticModelPutRequest } from "../mockData";
 
 const projectId = "fa118425-239f-46e9-b1b2-e4e9c462a8b5";
-let smdId;
-
+let smdId: string;
 
 describe("Semantic Model API Test Suite", () => {
-    let smdId: string;
 
-    test("1. Create a new Semantic Model - Verify successful creation", async () => {
+    it("1. Create a new Semantic Model - Verify successful creation", async () => {
+        allure.feature("Semantic Model");
+        allure.story("Create");
+        allure.description("Creates a new Semantic Model and verifies if ID is returned.");
+
         const response = await postSemanticModel(mockSemanticModelPostRequest);
+        allure.attachment("Post Request Payload", JSON.stringify(mockSemanticModelPostRequest), 'application/json');
+        allure.attachment("Response", JSON.stringify(response.json), 'application/json');
 
         expect(response.statusCode).toBe(200);
         expect(response.json).toBeDefined();
         smdId = response.json;
     });
 
-    test("2. Update the created Semantic Model - Verify update is successful", async () => {
+    it("2. Update the created Semantic Model - Verify update is successful", async () => {
+        allure.story("Update");
+        allure.description("Updates the previously created Semantic Model.");
+
         mockSemanticModelPutRequest.id = smdId;
         const response = await updateSemanticModel(mockSemanticModelPutRequest);
+        allure.attachment("Put Request Payload", JSON.stringify(mockSemanticModelPutRequest), 'application/json');
         expect(response.statusCode).toBe(204);
     });
 
-    test("3. Retrieve the updated Semantic Model - Verify response schema and values", async () => {
+    it("3. Retrieve the updated Semantic Model - Verify response schema and values", async () => {
+        allure.story("Get");
+        allure.description("Retrieves the updated Semantic Model and verifies all expected properties.");
+
         const response = await getSemanticModel(smdId, projectId);
+        allure.attachment("Get Response", JSON.stringify(response.json), 'application/json');
 
         expect(response.statusCode).toBe(200);
         expect(response.json).toBeDefined();
@@ -43,10 +55,16 @@ describe("Semantic Model API Test Suite", () => {
         expect(response.json.extraPrompt.objectives).toBe(mockSemanticModelPutRequest.extraPrompt.objectives);
     });
 
-    test("4. Delete the created Semantic Model - Verify deletion is successful", async () => {
+    it("4. Delete the created Semantic Model - Verify deletion is successful", async () => {
+        allure.story("Delete");
+        allure.description("Deletes the Semantic Model and verifies it is no longer accessible.");
+
         const response = await deleteSemanticModel(smdId, projectId);
         expect(response.statusCode).toBe(204);
+
         const getResponse = await getSemanticModel(smdId, projectId);
+        allure.attachment("Get After Deletion", JSON.stringify(getResponse.json), 'application/json');
         expect(getResponse.statusCode).toBe(400);
     });
+
 });

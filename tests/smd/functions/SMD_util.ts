@@ -1,5 +1,5 @@
 import {spec} from 'pactum';
-import {PostSemanticModelRequest, PutSemanticModelRequest} from './interfaces';
+import {PostSemanticModelRequest, PutSemanticModelRequest} from '../interfaces';
 
 const baseUrl = 'https://phoenix-dev.datamicron.com/api/smd/api';
 
@@ -30,7 +30,7 @@ export async function getSemanticModelsWithPagination(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -44,7 +44,7 @@ export async function getSemanticModel(id: string, projectId: string) {
             .toss();
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -68,7 +68,7 @@ export async function postSemanticModel(postData: PostSemanticModelRequest) {
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -86,7 +86,7 @@ export async function deleteSemanticModel(id: string, projectId: string) {
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -103,7 +103,7 @@ export async function updateSemanticModel(data: PutSemanticModelRequest) {
             .toss();
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -117,7 +117,7 @@ export async function getObjectType(id: string, projectId: string) {
             .toss();
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -145,7 +145,7 @@ export async function getObjectTypesWithPagination(
         const response = await request.toss();
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -166,7 +166,7 @@ export async function getObjectTypeGraph(groupId: string, unrecognized: boolean,
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -185,7 +185,7 @@ export async function getGraphByObjectType(objectTypeId: string, projectId: stri
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -204,7 +204,7 @@ export async function getObjectTypesByGroup(groupId: string, projectId: string) 
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -223,7 +223,7 @@ export async function getGraphBySemanticModel(semanticModelId: string, projectId
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -249,7 +249,7 @@ export async function getJoinObjectTypesBySemanticModel(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -273,7 +273,7 @@ export async function getObjectTypePreview(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -290,7 +290,7 @@ export async function getObjectTypeGroup(id: string, projectId: string) {
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -316,7 +316,7 @@ export async function getObjectTypeGroupsWithPagination(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -368,7 +368,7 @@ export async function getSemanticModelsByObjectTypeGroup(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -411,7 +411,7 @@ export async function getSemanticModelLinkedObjectTypes(
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
 
@@ -427,6 +427,6 @@ export async function getUnrecognizedGroup(projectId: string) {
 
         return response;
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {error: true, message: (error as Error).message, details: error};
     }
 }
