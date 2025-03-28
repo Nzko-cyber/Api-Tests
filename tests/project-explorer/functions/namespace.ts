@@ -1,7 +1,7 @@
 import pactum from "pactum";
-import '../../pactum.config';
+import "../../../pactum.config";
 
-let baseURL: string = '/project-explorer/api/Namespace';
+let baseURL: string = "/project-explorer/api/Namespace";
 
 async function getNamespaceWithPagination(
     PageNumber: number | null = null,
@@ -10,18 +10,25 @@ async function getNamespaceWithPagination(
     OrderType: string | null = null,
     OrderBy: string | null = null,
     invalidKey: boolean = false,
-    customParams: Record<string, any> = {}
+    customParams: Record<string, any> = {},
 ) {
     try {
         let queryJson: any = {};
 
-        const paramKeys = invalidKey ? {PageSize: 'pageSi'} : {PageSize: 'PageSize'};
+        const paramKeys = invalidKey
+            ? { PageSize: "pageSi" }
+            : { PageSize: "PageSize" };
 
-        if (PageNumber !== null && PageNumber !== undefined) queryJson.PageNumber = PageNumber;
-        if (PageSize !== null && PageSize !== undefined) queryJson[paramKeys.PageSize] = PageSize;
-        if (SearchTerm !== null && SearchTerm !== undefined) queryJson.SearchTerm = SearchTerm;
-        if (OrderType !== null && OrderType !== undefined) queryJson.OrderType = OrderType;
-        if (OrderBy !== null && OrderBy !== undefined) queryJson.OrderBy = OrderBy;
+        if (PageNumber !== null && PageNumber !== undefined)
+            queryJson.PageNumber = PageNumber;
+        if (PageSize !== null && PageSize !== undefined)
+            queryJson[paramKeys.PageSize] = PageSize;
+        if (SearchTerm !== null && SearchTerm !== undefined)
+            queryJson.SearchTerm = SearchTerm;
+        if (OrderType !== null && OrderType !== undefined)
+            queryJson.OrderType = OrderType;
+        if (OrderBy !== null && OrderBy !== undefined)
+            queryJson.OrderBy = OrderBy;
 
         // Add any custom parameters for more flexible testing
         Object.assign(queryJson, customParams);
@@ -32,18 +39,20 @@ async function getNamespaceWithPagination(
             spec.withQueryParams(queryJson);
         }
 
-        const response = await spec.toss();
-
-        return response;
+        return await spec.toss();
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {
+            error: true,
+            message: (error as Error).message,
+            details: error,
+        };
     }
 }
 
 async function createNamespace(
     name: string | null = null,
     description: string | null = null,
-    customParams: Record<string, any> = {}
+    customParams: Record<string, any> = {},
 ) {
     try {
         let bodyJson: any = {};
@@ -55,10 +64,13 @@ async function createNamespace(
 
         let spec = pactum.spec().post(`${baseURL}`).withJson(bodyJson);
 
-        const response = await spec.toss();
-        return response;
+        return await spec.toss();
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {
+            error: true,
+            message: (error as Error).message,
+            details: error,
+        };
     }
 }
 
@@ -71,18 +83,20 @@ async function getNamespace(id: string | null = null) {
             spec = pactum.spec().get(`${baseURL}?id=${id}`);
         }
 
-        const response = await spec.toss();
-
-        return response;
+        return await spec.toss();
     } catch (error) {
-        return { error: true, message: error.message, details: error };
+        return {
+            error: true,
+            message: (error as Error).message,
+            details: error,
+        };
     }
 }
 
 async function updateNamespace(
-    id?: any,
-    name: any = null,
-    description?: any,
+    id?: string | null,
+    name?: string | null,
+    description?: string | null,
     customParams: Record<string, any> = {},
 ) {
     try {
@@ -95,16 +109,17 @@ async function updateNamespace(
 
         let spec = pactum.spec().put(`${baseURL}/${id}`).withJson(bodyJson);
 
-        const response = await spec.toss();
-        return response;
-    } catch (error) {
-        return { error: true, message: error.message, details: error };
+        return await spec.toss();
+    } catch (error: any) {
+        return {
+            error: true,
+            message: (error as Error).message,
+            details: error,
+        };
     }
 }
 
-async function deleteNamespace(
-    id: string | null = null,
-) {
+async function deleteNamespace(id: string | null = null) {
     try {
         let spec: import("pactum/src/models/Spec");
         if (id === null) {
@@ -113,11 +128,13 @@ async function deleteNamespace(
             spec = pactum.spec().delete(`${baseURL}/${id}`);
         }
 
-        const response = await spec.toss();
-
-        return response;
+        return await spec.toss();
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {
+            error: true,
+            message: (error as Error).message,
+            details: error,
+        };
     }
 }
 

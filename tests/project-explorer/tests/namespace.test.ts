@@ -14,13 +14,6 @@ let en: any = {
     namespace2ID: "d533212e-25a2-485a-b2c2-31ba67bd803b",
 };
 
-const responseMessages = {
-    empty: { Name: ["'Name' must not be empty."] },
-    len: { Name: ["The name must be between 3 and 50 characters long."] },
-    char: { Name: ["The name cannot contain special characters."] },
-    num: { Name: ["The name must start with a letter."] },
-};
-
 let response: any = null;
 
 describe("Use-cases for Namespace", () => {
@@ -39,6 +32,10 @@ describe("Use-cases for Namespace", () => {
             );
 
             response = await getNamespaceWithPagination();
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body.pageNumber).toBe(1);
             expect(response.body.pageSize).toBe(20);
@@ -56,6 +53,10 @@ describe("Use-cases for Namespace", () => {
             );
 
             response = await getNamespaceWithPagination(-1, 10);
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -72,6 +73,10 @@ describe("Use-cases for Namespace", () => {
             );
 
             response = await getNamespaceWithPagination(100000, 10);
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body.pageNumber).toBe(100000);
             expect(response.body.pageSize).toBe(10);
@@ -84,6 +89,10 @@ describe("Use-cases for Namespace", () => {
             );
 
             response = await getNamespaceWithPagination(1, -5);
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -107,6 +116,10 @@ describe("Use-cases for Namespace", () => {
                 null,
                 true,
             );
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body.pageNumber).toBe(1);
             expect(response.body.pageSize).toBe(20);
@@ -124,10 +137,16 @@ describe("Use-cases for Namespace", () => {
 
             en.test_namespace1Name = randomString(15, true);
             en.test_namespace1Description = randomString(15);
+            allure.parameter("Namespace Name", en.test_namespace1Name);
+            allure.parameter("Description", en.test_namespace1Description);
             response = await createNamespace(
                 en.test_namespace1Name,
                 en.test_namespace1Description,
             );
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body).toBeDefined();
             en.test_namespace1ID = response.body;
@@ -143,10 +162,13 @@ describe("Use-cases for Namespace", () => {
 
             en.test_namespace2Name = randomString(15);
             en.test_namespace2Description = randomString(15);
+            allure.parameter("Namespace Name", en.test_namespace2Name);
+            allure.parameter("Description", en.test_namespace2Description);
             response = await createNamespace(
                 en.test_namespace2Name,
                 en.test_namespace2Description,
             );
+            allure.parameter("HTTP Status", response.statusCode);
             expect(response.statusCode).toBe(200);
             expect(response.body).toBeDefined();
             en.test_namespace2ID = response.body;
@@ -157,11 +179,17 @@ describe("Use-cases for Namespace", () => {
             allure.description(
                 "This test case verifies that the API returns an error when the namespace name is a duplicate",
             );
+            
+            allure.parameter("Namespace Name", en.test_namespace2Name);
 
             response = await createNamespace(
                 en.test_namespace2Name,
                 randomString(15),
             );
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -178,6 +206,10 @@ describe("Use-cases for Namespace", () => {
             );
 
             response = await createNamespace(null, randomString(15));
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -195,6 +227,7 @@ describe("Use-cases for Namespace", () => {
 
             en.test_namespace3Name = randomString(15);
             response = await createNamespace(en.test_namespace3Name, "");
+            allure.parameter("HTTP Status", response.statusCode);
             expect(response.statusCode).toBe(200);
             expect(response.body).toBeDefined();
             en.test_namespace3ID = response.body;
@@ -207,8 +240,13 @@ describe("Use-cases for Namespace", () => {
             );
 
             const descriptionArray = ["This", "should", "fail"];
+            allure.parameter("Description", descriptionArray);
             response = await createNamespace(randomString(15), null, {
                 description: descriptionArray,
+            });
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
             });
             expect(response.statusCode).toBe(400);
             expect(response.json.errors.description).toBeDefined();
@@ -223,6 +261,10 @@ describe("Use-cases for Namespace", () => {
             );
 
             response = await createNamespace(randomString(2), randomString(15));
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.errors.Name).toEqual([
                 "The name must be between 3 and 50 characters long.",
@@ -238,10 +280,12 @@ describe("Use-cases for Namespace", () => {
             );
 
             en.test_namespace4Name = randomString(3);
+            allure.parameter("Namespace Name", en.test_namespace4Name);
             response = await createNamespace(
                 en.test_namespace4Name,
                 randomString(15),
             );
+            allure.parameter("HTTP Status", response.statusCode);
             expect(response.statusCode).toBe(200);
             expect(response.body).toBeDefined();
             en.test_namespace4ID = response.body;
@@ -256,10 +300,12 @@ describe("Use-cases for Namespace", () => {
             );
 
             en.test_namespace5Name = randomString(50);
+            allure.parameter("Namespace Name", en.test_namespace5Name);
             response = await createNamespace(
                 en.test_namespace5Name,
                 randomString(15),
             );
+            allure.parameter("HTTP Status", response.statusCode);
             expect(response.statusCode).toBe(200);
             expect(response.body).toBeDefined();
             en.test_namespace5ID = response.body;
@@ -275,6 +321,10 @@ describe("Use-cases for Namespace", () => {
                 randomString(51),
                 randomString(15),
             );
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.errors.Name).toEqual([
                 "The name must be between 3 and 50 characters long.",
@@ -290,7 +340,12 @@ describe("Use-cases for Namespace", () => {
             );
 
             const charName = "!@#$" + randomString(15);
+            allure.parameter("Namespace Name", charName);
             response = await createNamespace(charName, randomString(15));
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.errors.Name).toEqual([
                 "The name cannot contain special characters.",
@@ -304,7 +359,12 @@ describe("Use-cases for Namespace", () => {
             );
 
             const numName = "123" + randomString(15);
+            allure.parameter("Namespace Name", numName);
             response = await createNamespace(numName, randomString(15));
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.errors.Name).toEqual([
                 "The name must start with a letter.",
@@ -320,8 +380,14 @@ describe("Use-cases for Namespace", () => {
             allure.description(
                 "This test case verifies that the API retrieves a namespace with a valid Namespace ID",
             );
+            
+            allure.parameter("Namespace ID", en.namespace1ID);
 
             response = await getNamespace(en.test_namespace1ID);
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body).toBeDefined();
             expect(response.body.id).toBe(en.test_namespace1ID);
@@ -338,8 +404,14 @@ describe("Use-cases for Namespace", () => {
             allure.description(
                 "This test case verifies that the API returns an error when the Namespace ID does not exist",
             );
+            
+            allure.parameter("Namespace ID", en.nonExistentID);
 
             response = await getNamespace(en.nonExistentID);
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -356,8 +428,14 @@ describe("Use-cases for Namespace", () => {
             allure.description(
                 "This test case verifies that the API returns an error when the Namespace ID format is invalid",
             );
+            
+            allure.parameter("Namespace ID", en.invalidID);
 
             response = await getNamespace(en.invalidID);
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -376,6 +454,10 @@ describe("Use-cases for Namespace", () => {
             );
 
             response = await getNamespace("");
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -392,8 +474,14 @@ describe("Use-cases for Namespace", () => {
             allure.description(
                 "This test case verifies that the API retrieves a namespace with a valid ID and empty description",
             );
+            
+            allure.parameter("Namespace ID", en.test_namespace3ID);
 
             response = await getNamespace(en.test_namespace3ID);
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body).toBeDefined();
             expect(response.body.id).toBe(en.test_namespace3ID);
@@ -413,11 +501,18 @@ describe("Use-cases for Namespace", () => {
 
             en.test_namespace1Name = randomString(15);
             en.test_namespace1Description = randomString(15);
+            allure.parameter("Namespace ID", en.test_namespace1ID);
+            allure.parameter("Namespace Name", en.test_namespace1Name);
+            allure.parameter("Description", en.test_namespace1Description);
             response = await updateNamespace(
                 en.test_namespace1ID,
                 en.test_namespace1Name,
                 en.test_namespace1Description,
             );
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(204);
         });
 
@@ -426,8 +521,14 @@ describe("Use-cases for Namespace", () => {
             allure.description(
                 "This test case verifies that the API returns the updated namespace data",
             );
+            
+            allure.parameter("Namespace ID", en.test_namespace1ID);
 
             response = await getNamespace(en.test_namespace1ID);
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body).toBeDefined();
             expect(response.body.id).toBe(en.test_namespace1ID);
@@ -444,12 +545,18 @@ describe("Use-cases for Namespace", () => {
             allure.description(
                 "This test case verifies that the API returns an error when the Namespace ID does not exist",
             );
+            
+            allure.parameter("Namespace ID", en.nonExistentID);
 
             response = await updateNamespace(
                 en.nonExistentID,
                 randomString(15),
                 randomString(15),
             );
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -464,12 +571,19 @@ describe("Use-cases for Namespace", () => {
             allure.description(
                 "This test case verifies that the API returns an error when the name field is empty",
             );
+            
+            allure.parameter("Namespace ID", en.test_namespace1ID);
+            allure.parameter("Namespace Name", "");
 
             response = await updateNamespace(
                 en.test_namespace1ID,
                 "",
                 randomString(15),
             );
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -505,6 +619,10 @@ describe("Use-cases for Namespace", () => {
             );
 
             response = await getNamespace(en.test_namespace2ID);
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body).toBeDefined();
             expect(response.body.id).toBe(en.test_namespace2ID);
@@ -519,12 +637,18 @@ describe("Use-cases for Namespace", () => {
             allure.description(
                 "This test case verifies that the API returns an error when the ID field is missing",
             );
+            
+            allure.parameter("Namespace ID", "");
 
             response = await updateNamespace(
                 null,
                 randomString(15),
                 randomString(15),
             );
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -545,6 +669,10 @@ describe("Use-cases for Namespace", () => {
                 en.test_namespace1Name,
                 randomString(15),
             );
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -567,6 +695,10 @@ describe("Use-cases for Namespace", () => {
                 randomString(2),
                 randomString(15),
             );
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.errors.Name).toEqual([
                 "The name must be between 3 and 50 characters long.",
@@ -583,11 +715,17 @@ describe("Use-cases for Namespace", () => {
 
             en.test_namespace4Name = randomString(3);
             en.test_namespace4Description = randomString(15);
+            
+            allure.parameter("Namespace ID", en.test_namespace4ID);
+            allure.parameter("Namespace Name", en.test_namespace4Name);
+            allure.parameter("Description", en.test_namespace4Description);
+            
             response = await updateNamespace(
                 en.test_namespace4ID,
                 en.test_namespace4Name,
                 en.test_namespace4Description,
             );
+            allure.parameter("HTTP Status", response.statusCode);
             expect(response.statusCode).toBe(204);
         });
 
@@ -598,6 +736,10 @@ describe("Use-cases for Namespace", () => {
             );
 
             response = await getNamespace(en.test_namespace4ID);
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body).toBeDefined();
             expect(response.body.id).toBe(en.test_namespace4ID);
@@ -617,11 +759,18 @@ describe("Use-cases for Namespace", () => {
 
             en.test_namespace5Name = randomString(50);
             en.test_namespace5Description = randomString(15);
+            allure.parameter("Namespace ID", en.test_namespace5ID);
+            allure.parameter("Namespace Name", en.test_namespace5Name);
+            allure.parameter("Description", en.test_namespace5Description);
             response = await updateNamespace(
                 en.test_namespace5ID,
                 en.test_namespace5Name,
                 en.test_namespace5Description,
             );
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(204);
         });
 
@@ -634,6 +783,10 @@ describe("Use-cases for Namespace", () => {
             );
 
             response = await getNamespace(en.test_namespace5ID);
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body).toBeDefined();
             expect(response.body.id).toBe(en.test_namespace5ID);
@@ -656,6 +809,10 @@ describe("Use-cases for Namespace", () => {
                 randomString(51),
                 randomString(15),
             );
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.errors.Name).toEqual([
                 "The name must be between 3 and 50 characters long.",
@@ -669,12 +826,16 @@ describe("Use-cases for Namespace", () => {
             allure.description(
                 "This test case verifies that the API returns an error when the name contains special characters",
             );
-
+            
             response = await updateNamespace(
                 en.test_namespace5ID,
                 "!@#$" + randomString(15),
                 randomString(15),
             );
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.errors.Name).toEqual([
                 "The name cannot contain special characters.",
@@ -694,6 +855,10 @@ describe("Use-cases for Namespace", () => {
                 "123" + randomString(15),
                 randomString(15),
             );
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.errors.Name).toEqual([
                 "The name must start with a letter.",
@@ -709,8 +874,11 @@ describe("Use-cases for Namespace", () => {
             allure.description(
                 "This test case verifies that the API successfully deletes a namespace with a valid Namespace ID",
             );
+            
+            allure.parameter("Namespace ID", en.test_namespace1ID);
 
             response = await deleteNamespace(en.test_namespace1ID);
+            allure.parameter("HTTP Status", response.statusCode);
             expect(response.statusCode).toBe(204);
         });
 
@@ -720,7 +888,10 @@ describe("Use-cases for Namespace", () => {
                 "This test case verifies that the API returns an error when the Namespace ID does not exist",
             );
 
+            allure.parameter("Namespace ID", en.nonExistentID);
+            
             response = await deleteNamespace(en.nonExistentID);
+            allure.parameter("HTTP Status", response.statusCode);
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -737,6 +908,7 @@ describe("Use-cases for Namespace", () => {
             );
 
             response = await deleteNamespace(null);
+            allure.parameter("HTTP Status", response.statusCode);
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -751,8 +923,14 @@ describe("Use-cases for Namespace", () => {
             allure.description(
                 "This test case verifies that the API returns an error when the Namespace ID format is invalid",
             );
+            
+            allure.parameter("Namespace ID", en.invalidID);
 
             response = await deleteNamespace(en.invalidID);
+            allure.parameter("HTTP Status", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -767,6 +945,11 @@ describe("Use-cases for Namespace", () => {
             allure.description(
                 "This test case verifies that the API successfully deletes all specified namespaces",
             );
+            
+            allure.parameter("Namespace ID 2", en.test_namespace2ID);
+            allure.parameter("Namespace ID 3", en.test_namespace3ID);
+            allure.parameter("Namespace ID 4", en.test_namespace4ID);
+            allure.parameter("Namespace ID 5", en.test_namespacw5ID);
 
             response = await deleteNamespace(en.test_namespace2ID);
             expect(response.statusCode).toBe(204);
