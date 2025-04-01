@@ -23,7 +23,7 @@ let en: TestData = {
 
 let response: any;
 
-describe('API_BACKEND::PROJECT EXPLORER::File', () => {
+describe(' PROJECT EXPLORER::File', () => {
     describe('1 - Uploading File :: Post /project-explorer/api/File/upload', () => {
         it('1.1 - Upload: Successfully uploads a valid file', async () => {
             response = await uploadFile(en.fileSource, en.project1Id);

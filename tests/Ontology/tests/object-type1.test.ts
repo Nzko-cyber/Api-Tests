@@ -88,7 +88,7 @@ const validRequestBody: RequestBody = {
     ]
 };
 
-describe('API_BACKEND::ONTOLOGY::ObjectType-1', () => {
+describe(' ONTOLOGY::ObjectType-1', () => {
     beforeEach(() => {
         allure.epic('Ontology');
         allure.feature('ObjectType API Tests');

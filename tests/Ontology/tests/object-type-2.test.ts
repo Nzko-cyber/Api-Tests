@@ -15,7 +15,7 @@ const environment = {
     invalidObjectTypeID: "invalid-object-id",
 };
 
-describe("API_BACKEND::ONTOLOGY::ObjectType-2", () => {
+describe(" ONTOLOGY::ObjectType-2", () => {
     beforeEach(() => {
         allure.epic("Ontology");
         allure.feature("ObjectType API Tests Seconf Half");

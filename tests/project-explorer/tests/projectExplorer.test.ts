@@ -10,7 +10,7 @@ let en = {
 
 let response: any;
 
-describe('API_BACKEND::PROJECT EXPLORER::ProjectExplorer', () => {
+describe(' PROJECT EXPLORER::ProjectExplorer', () => {
     describe('1 - Get ProjectExplorer :: Get /project-explorer/api/ProjectExplorer', () => {
         it('1.1 - Retrieves ProjectExplorer with a valid ProjectId', async () => {
             response = await getProjectExplorer(en.project1Id);

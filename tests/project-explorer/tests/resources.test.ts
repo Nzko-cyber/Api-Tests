@@ -10,7 +10,7 @@ const longName = "a".repeat(51);
 const sqlInjection = "'; DROP TABLE users; --";
 const xssAttack = "<script>alert('Hacked')</script>";
 
-describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
+describe(" PROJECT-EXPLORER::RESOURCE", () => {
     describe("API Tests - Search Resources (GET)", () => {
 
         const projectId = "79eb5496-9516-4318-ada4-60284b379ed2";

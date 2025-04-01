@@ -17,7 +17,7 @@ const environment = {
     duplicateName: "ExistingControl123"
 };
 
-describe("API_BACKEND::INSTABI::DASHBOARD_TAB", () => {
+describe(" INSTABI::DASHBOARD_TAB", () => {
     beforeEach(async () => {
         allure.epic('Instabi');
         allure.feature('Dashboard Tab API Tests');

@@ -1,3 +1,4 @@
+import { owner } from "allure-js-commons";
 import { deleteSemanticModel, getSemanticModel, postSemanticModel, updateSemanticModel } from "../functions/SMD_util";
 import { mockSemanticModelPostRequest, mockSemanticModelPutRequest } from "../mockData";
 
@@ -5,9 +6,15 @@ const projectId = "fa118425-239f-46e9-b1b2-e4e9c462a8b5";
 let smdId: string;
 
 describe("Semantic Model API Test Suite", () => {
+    beforeEach(() => {
+        allure.epic("Semantic Model");
+        allure.owner("QA Team");
+        allure.feature("Semantic Model");
+
+    })
+
 
     it("1. Create a new Semantic Model - Verify successful creation", async () => {
-        allure.feature("Semantic Model");
         allure.story("Create");
         allure.description("Creates a new Semantic Model and verifies if ID is returned.");
 
@@ -66,5 +73,7 @@ describe("Semantic Model API Test Suite", () => {
         allure.attachment("Get After Deletion", JSON.stringify(getResponse.json), 'application/json');
         expect(getResponse.statusCode).toBe(400);
     });
+
+    
 
 });

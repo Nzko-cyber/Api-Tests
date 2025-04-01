@@ -10,7 +10,7 @@ let en: any = {
 
 let response: any = null;
 
-describe('API_BACKEND::PROJECTEXPLORER::Project', () => {
+describe(' PROJECTEXPLORER::Project', () => {
     describe('1 - API Tests :: Get with Pagination (GET)', () => {
         it('1.1 - Fetches paginated projects with a valid request', async () => {
             response = await getProjectWithPagination(null, 1, 10);

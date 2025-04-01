@@ -18,7 +18,7 @@ const environment = {
     invalidName: "invalid contol name"
 };
 
-describe('API_BACKEND::INSTABI::DASHBOARD_CONTROL', () => {
+describe(' INSTABI::DASHBOARD_CONTROL', () => {
     beforeEach(() => {
         allure.epic('Instabi');
         allure.feature('Dashboard Control API Tests');
@@ -605,7 +605,7 @@ describe('API_BACKEND::INSTABI::DASHBOARD_CONTROL', () => {
         await sleep(1000);
     });
 
-    it('✅ Update DashboardControl with invalid ProjectId', async () => {
+    it('❌ Update DashboardControl with invalid ProjectId', async () => {
         allure.story('Update DashboardControl with invalid ProjectId');
         allure.description('This test checks error handling for an invalid ProjectId during update.');
 
@@ -633,7 +633,7 @@ describe('API_BACKEND::INSTABI::DASHBOARD_CONTROL', () => {
         await sleep(1000);
     });
 
-    it('✅ Update DashboardControl with empty ProjectId', async () => {
+    it('❌ Update DashboardControl with empty ProjectId', async () => {
         allure.story('Update DashboardControl with empty ProjectId');
         allure.description('This test checks validation when ProjectId is not provided.');
 
@@ -661,7 +661,7 @@ describe('API_BACKEND::INSTABI::DASHBOARD_CONTROL', () => {
         await sleep(1000);
     });
 
-    it('✅ Update DashboardControl with empty DashboardControlId', async () => {
+    it('❌ Update DashboardControl with empty DashboardControlId', async () => {
         allure.story('Update DashboardControl with empty DashboardControlId');
         allure.description('This test checks validation when the DashboardControlId is empty.');
 
@@ -689,7 +689,7 @@ describe('API_BACKEND::INSTABI::DASHBOARD_CONTROL', () => {
         await sleep(1000);
     });
 
-    it('✅ Update DashboardControl with invalid DashboardControlId', async () => {
+    it('❌ Update DashboardControl with invalid DashboardControlId', async () => {
         allure.story('Update DashboardControl with invalid DashboardControlId');
         allure.description('This test checks behavior when an invalid DashboardControlId is used.');
 
@@ -717,7 +717,7 @@ describe('API_BACKEND::INSTABI::DASHBOARD_CONTROL', () => {
         await sleep(1000);
     });
 
-    it('✅ Try updating location and size to negative values', async () => {
+    it('❌ Try updating location and size to negative values', async () => {
         allure.story('Update DashboardControl with negative coordinates');
         allure.description('This test ensures that the API correctly rejects negative values for location and size.');
 
@@ -747,118 +747,158 @@ describe('API_BACKEND::INSTABI::DASHBOARD_CONTROL', () => {
 });
 
 
-    describe('API Tests - Creating ObjectType (GET)', () => {
+describe('API Tests - Get Dashboard Contril', () => {
+    allure.feature('Dashboard Control Retrive');
+    it('❌ Get DashboardControl with valid ID', async () => {
+        allure.story('Get DashboardControl with valid ID');
+        allure.description('This test ensures that the API correctly retrieves a dashboard control with a valid ID.');
 
-        it('✅ Get DashboardControl with valid ID', async () => {
-            const response = await getDashboardControl(
-                environment.validProjectID,
-                environment.dashboardControlID
-            );
+        const response = await getDashboardControl(
+            environment.validProjectID,
+            environment.dashboardControlID
+        );
 
+        allure.parameter('HTTP Status', response.statusCode);
+        allure.attachment('Response Body', response, { contentType: allure.ContentType.JSON });
 
-            expect(response).toBeDefined();
-            expect(response.statusCode).toBe(200);
-            console.log(`✅ Retrieved DashboardControl ID: ${environment.dashboardControlID}`);
-            await sleep(1000);
-        });
+        expect(response).toBeDefined();
+        expect(response.statusCode).toBe(200);
+        console.log(`✅ Retrieved DashboardControl ID: ${environment.dashboardControlID}`);
+        await sleep(1000);
+    });
 
-        it('✅ Get DashboardControl with invalid ID', async () => {
-            const response = await getDashboardControl(
-                environment.validProjectID,
-                'invalid-id'
-            );
+    it('❌ Get DashboardControl with invalid ID', async () => {
+        allure.story('Get DashboardControl with invalid ID');
+        allure.description('This test ensures that the API correctly rejects an invalid dashboard control ID.');
 
+        const response = await getDashboardControl(
+            environment.validProjectID,
+            'invalid-id'
+        );
 
-            expect(response.statusCode).toBe(400);
-            console.log(`✅ Retrieved DashboardControl with invalid ID`);
-            await sleep(1000);
-        });
+        allure.parameter('HTTP Status', response.statusCode);
+        allure.attachment('Response Body', response, { contentType: allure.ContentType.JSON });
 
-        it('✅ Get DashboardControl with empty ID', async () => {
-            const response = await getDashboardControl(
-                environment.validProjectID,
-                ''
-            );
+        expect(response.statusCode).toBe(400);
+        console.log(`✅ Retrieved DashboardControl with invalid ID`);
+        await sleep(1000);
+    });
 
+    it('❌ Get DashboardControl with empty ID', async () => {
+        allure.story('Get DashboardControl with empty ID');
+        allure.description('This test ensures that the API correctly handles an empty ID for dashboard control.');
 
-            expect(response.statusCode).toBe(400);
-            console.log(`✅ Retrieved DashboardControl with empty ID`);
-            await sleep(1000);
-        });
+        const response = await getDashboardControl(
+            environment.validProjectID,
+            ''
+        );
 
-        it('✅ Get DashboardControl by ID', async () => {
-            const response = await getDashboardControl(environment.validProjectID, environment.dashboardControlID);
-            expect(response).toBeDefined();
-            expect(response.statusCode).toBe(200);
+        allure.parameter('HTTP Status', response.statusCode);
+        allure.attachment('Response Body', response, { contentType: allure.ContentType.JSON });
 
-            console.log(`✅ Retrieved DashboardControl: ${response.name}, ID: ${response.id}`);
-            await sleep(1000);
-        });
-    })
+        expect(response.statusCode).toBe(400);
+        console.log(`✅ Retrieved DashboardControl with empty ID`);
+        await sleep(1000);
+    });
 
+    it('✅ Get DashboardControl by ID', async () => {
+        allure.story('Get DashboardControl by ID');
+        allure.description('This test retrieves a dashboard control using a valid ID.');
+
+        const response = await getDashboardControl(environment.validProjectID, environment.dashboardControlID);
+        expect(response).toBeDefined();
+        expect(response.statusCode).toBe(200);
+
+        console.log(`✅ Retrieved DashboardControl: ${response.name}, ID: ${response.id}`);
+        await sleep(1000);
+    });
+});
 
     describe('Get DashboardControl List by DashboadrdId', () => {
-        it('✅ Get DashboardControl List by DashboardId', async () => {
-            const response = await getDashboardControlList(environment.validProjectID, environment.dashboardID);
-            expect(response).toBeDefined();
-            expect(response.statusCode).toBe(200);
-            console.log(`✅ Retrieved DashboardControl List`);
-            await sleep(2000);
-        });
+    it('✅ Get DashboardControl List by DashboardId', async () => {
+        allure.story('Get DashboardControl List by DashboardId');
+        allure.description('This test retrieves the list of dashboard controls for a valid dashboard ID.');
 
+        const response = await getDashboardControlList(environment.validProjectID, environment.dashboardID);
+        expect(response).toBeDefined();
+        expect(response.statusCode).toBe(200);
+        console.log(`✅ Retrieved DashboardControl List`);
+        await sleep(2000);
+
+});
+
+
+    it('✅ Get DashboardControl List by invalid DashboardId', async () => {
+        allure.story('Get DashboardControl List by invalid DashboardId');
+        allure.description('This test ensures that the API correctly handles an invalid dashboard ID.');
+
+        const response = await getDashboardControlList(environment.validProjectID, environment.dashboardTabID);
+        expect(response).toBeDefined();
+        expect(response.statusCode).toBe(200);
+        console.log(`✅ Retrieved DashboardControl List by DashboardTabId`);
+        await sleep(2000);
+    });
+});
+
+
+describe('API Tests - Deleting Dashboard (Delete)', () => {
+    allure.feature('Dashboard Control Delete');
+
+    it('✅ Delete DashboardControl with valid data', async () => {
+        allure.story('Delete DashboardControl with valid data');
+        allure.description('This test ensures that the API correctly deletes a dashboard control using a valid ID.');
+
+        const response = await deleteDashboardControl(environment.validProjectID, environment.dashboardControlID);
+        console.log(`✅ Deleted DashboardControl ID: ${environment.dashboardControlID}`);
+        expect(response).toBeDefined();
+        expect(response.statusCode).toBe(204);
+
+        await sleep(1000);
     });
 
-    describe('Get DashboardControl List by invalid DashboadrdId', () => {
-        it('✅ Get DashboardControl List by DashboardId', async () => {
-            const response = await getDashboardControlList(environment.validProjectID, environment.dashboardTabID);
-            expect(response).toBeDefined();
-            expect(response.statusCode).toBe(200);
-            console.log(`✅ Retrieved DashboardControl List by DashboardTabId`);
-            await sleep(2000);
-        });
+    it('❌ Delete DashboardControl with empty dashboardControlId', async () => {
+        allure.story('Delete DashboardControl with empty dashboardControlId');
+        allure.description('This test ensures that the API rejects a request to delete a dashboard control with an empty ID.');
+
+        const response = await deleteDashboardControl(environment.validProjectID, '');
+        console.log(`✅ Attempted to delete DashboardControl with empty ID`);
+        expect(response.statusCode).toBe(400);
+
+        await sleep(1000);
     });
 
-    describe('API Tests - Deleting Dashboard (Delete)', () => {
-        it('✅ Delete DashboardControl with valid data', async () => {
-            const response = await deleteDashboardControl(environment.validProjectID, environment.dashboardControlID);
-            console.log(`✅ Deleted DashboardControl ID: ${environment.dashboardControlID}`);
-            expect(response).toBeDefined();
-            expect(response.statusCode).toBe(204);
+    it('❌ Delete DashboardControl with invalid dashboardControlId', async () => {
+        allure.story('Delete DashboardControl with invalid dashboardControlId');
+        allure.description('This test ensures that the API correctly rejects a request to delete a dashboard control with an invalid ID.');
 
-            await sleep(1000);
-        });
+        const response = await deleteDashboardControl(environment.validProjectID, 'invalid-id');
+        console.log(`✅ Attempted to delete DashboardControl with invalid ID`);
+        expect(response.statusCode).toBe(400);
 
-        it('✅ Delete DashboardControl with empty dashboardcontorlid', async () => {
-            const response = await deleteDashboardControl(environment.validProjectID, '');
-            console.log(`✅ Deleted DashboardControl ID: ${environment.dashboardControlID}`);
-            expect(response.statusCode).toBe(400);
-
-            await sleep(1000);
-        });
-
-        it('✅ Delete DashboardControl with invalid dashboardcontorlid', async () => {
-            const response = await deleteDashboardControl(environment.validProjectID, 'invalid-id');
-            console.log(`✅ Deleted DashboardControl ID: ${environment.dashboardControlID}`);
-            expect(response.statusCode).toBe(400);
-
-            await sleep(1000);
-        });
-
-        it('✅ Delete DashboardControl with invalid ProjectId', async () => {
-            const response = await deleteDashboardControl(environment.invalidProjectID, environment.dashboardControlID);
-            expect(response.statusCode).toBe(400);
-
-            console.log(`✅ Deleted DashboardControl ID: ${environment.dashboardControlID}`);
-            await sleep(1000);
-        });
-        it('✅ Delete DashboardControl with empty ProjectId', async () => {
-            const response = await deleteDashboardControl('', environment.dashboardControlID);
-            expect(response.statusCode).toBe(400);
-
-            console.log(`✅ Deleted DashboardControl ID: ${environment.dashboardControlID}`);
-            await sleep(1000);
-        });
-
+        await sleep(1000);
     });
 
+    it('❌ Delete DashboardControl with invalid ProjectId', async () => {
+        allure.story('Delete DashboardControl with invalid ProjectId');
+        allure.description('This test ensures that the API correctly rejects a request to delete a dashboard control with an invalid project ID.');
+
+        const response = await deleteDashboardControl(environment.invalidProjectID, environment.dashboardControlID);
+        expect(response.statusCode).toBe(400);
+
+        console.log(`✅ Attempted to delete DashboardControl with invalid ProjectId`);
+        await sleep(1000);
+    });
+
+    it('❌ Delete DashboardControl with empty ProjectId', async () => {
+        allure.story('Delete DashboardControl with empty ProjectId');
+        allure.description('This test ensures that the API correctly handles requests to delete a dashboard control with an empty project ID.');
+
+        const response = await deleteDashboardControl('', environment.dashboardControlID);
+        expect(response.statusCode).toBe(400);
+
+        console.log(`✅ Attempted to delete DashboardControl with empty ProjectId`);
+        await sleep(1000);
+    });
+
+});
 });

@@ -17,7 +17,7 @@ let en: any = {
 
 let response: any;
 
-describe('API_BACKEND::PROJECTEXPLORER::Folder', () => {
+describe(' PROJECTEXPLORER::Folder', () => {
     describe('1 - Creating Folder :: Post /project-explorer/api/Folder', () => {
         it('1.1 - Successfully creates a folder without a ParentId', async () => {
             en.folder1Name = randomString(15);
