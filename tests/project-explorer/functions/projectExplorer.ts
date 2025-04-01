@@ -1,12 +1,12 @@
 import pactum from "pactum";
-import '../../pactum.config';
+import "../../../pactum.config";
 
-let baseURL: string = '/project-explorer/api/ProjectExplorer';
+let baseURL: string = "/project-explorer/api/ProjectExplorer";
 
 async function getProjectExplorer(
     projectId: string | null = null,
     folderId: string | null = null,
-    searchTerm: string | null = null
+    searchTerm: string | null = null,
 ) {
     try {
         let query: any = {};
@@ -22,17 +22,20 @@ async function getProjectExplorer(
         let spec = pactum.spec().get(`${baseURL}`);
 
         if (projectId !== null) {
-            spec.withHeaders('projectId', projectId);
+            spec.withHeaders("projectId", projectId);
         }
 
         if (Object.keys(query).length > 0) {
             spec.withJson(query);
         }
 
-        const response = await spec.toss();
-        return response;
+        return await spec.toss();
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {
+            error: true,
+            message: (error as Error).message,
+            details: error,
+        };
     }
 }
 
