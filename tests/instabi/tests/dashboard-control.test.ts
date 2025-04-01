@@ -20,9 +20,9 @@ const environment = {
 
 describe(' INSTABI::DASHBOARD_CONTROL', () => {
     beforeEach(() => {
-        allure.epic('Instabi');
-        allure.feature('Dashboard Control API Tests');
-        allure.owner('QA Team');
+        allure.epic("Instabi");
+        allure.feature("Dashboard Control API Tests");
+        allure.owner("QA Team");
     });
 
     describe('API Tests - Creating Dashboard_Control (POST)', () => {

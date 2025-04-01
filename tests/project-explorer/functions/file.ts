@@ -1,27 +1,30 @@
 import pactum from "pactum";
-import '../../pactum.config';
+import "../../../pactum.config";
 
-let baseURL: string = '/project-explorer/api/File';
+let baseURL: string = "/project-explorer/api/File";
 
-async function uploadFile(
-    file: any,
-    projectId: string | null = null
-) {
+async function uploadFile(file: any, projectId: string | null = null) {
     try {
-        let spec = pactum.spec().post(`${baseURL}/upload`).withHeaders({'Content-Type': 'multipart/form-data'});
+        let spec = pactum
+            .spec()
+            .post(`${baseURL}/upload`)
+            .withHeaders({ "Content-Type": "multipart/form-data" });
 
         if (projectId !== null) {
-            spec.withHeaders('ProjectId', projectId);
+            spec.withHeaders("ProjectId", projectId);
         }
 
         if (file !== null) {
-            spec.withFile('file', file);
+            spec.withFile("file", file);
         }
 
-        const response = await spec.toss();
-        return response;
+        return await spec.toss();
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {
+            error: true,
+            message: (error as Error).message,
+            details: error,
+        };
     }
 }
 
@@ -30,7 +33,7 @@ async function createFile(
     fileName: string | null = null,
     projectId: string | null = null,
     folderId: string | null = null,
-    option: string | null = null
+    option: string | null = null,
 ) {
     try {
         let bodyJson: any = {};
@@ -43,59 +46,67 @@ async function createFile(
         let spec = pactum.spec().post(`${baseURL}`);
 
         if (projectId !== null) {
-            spec.withHeaders('ProjectId', projectId);
+            spec.withHeaders("ProjectId", projectId);
         }
 
         if (Object.keys(bodyJson).length > 0) {
             spec.withJson(bodyJson);
         }
 
-        const response = await spec.toss();
-        return response;
+        return await spec.toss();
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {
+            error: true,
+            message: (error as Error).message,
+            details: error,
+        };
     }
 }
 
 async function getFile(
     id: string | null = null,
-    projectId: string | null = null
+    projectId: string | null = null,
 ) {
     try {
         let spec = pactum.spec().get(`${baseURL}/download?Id=${id}`);
 
         if (projectId !== null) {
-            spec.withHeaders('ProjectId', projectId);
+            spec.withHeaders("ProjectId", projectId);
         }
 
-        const response = await spec.toss();
-        return response;
+        return await spec.toss();
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {
+            error: true,
+            message: (error as Error).message,
+            details: error,
+        };
     }
 }
 
 async function deleteFile(
     id: string | null = null,
-    projectId: string | null = null
+    projectId: string | null = null,
 ) {
     try {
-        let spec = pactum.spec().delete(`/project-explorer/api/ProjectExplorer/DeleteResource?id=${id}`);
+        let spec = pactum
+            .spec()
+            .delete(
+                `/project-explorer/api/ProjectExplorer/DeleteResource?id=${id}`,
+            );
 
         if (projectId !== null) {
-            spec.withHeaders('ProjectId', projectId);
+            spec.withHeaders("ProjectId", projectId);
         }
 
-        const response = await spec.toss();
-        return response;
+        return await spec.toss();
     } catch (error) {
-        return {error: true, message: error.message, details: error};
+        return {
+            error: true,
+            message: (error as Error).message,
+            details: error,
+        };
     }
 }
 
-export {
-    uploadFile,
-    createFile,
-    getFile,
-    deleteFile
-}
+export { uploadFile, createFile, getFile, deleteFile };
