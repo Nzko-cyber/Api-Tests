@@ -89,7 +89,7 @@ const putMockData = {
 }
 
 
-describe("API_BACKEND::ONTOLOGY::LINKTYPE", () => {
+describe(" ONTOLOGY::LINKTYPE", () => {
     beforeEach(() => {
         allure.epic("Ontology");
         allure.feature("Linktype API Tests");

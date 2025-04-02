@@ -12,7 +12,7 @@ const environment = {
     dashboardid: ''
 };
 
-describe("API_BACKEND::INSTABI::Dashboard", () => {
+describe(" INSTABI::Dashboard", () => {
     beforeEach(async () => {
         allure.epic('Instabi');
         allure.feature('Dashboard API Tests');

@@ -26,11 +26,17 @@ let en: any = {
 
 let response: any = null;
 
-describe('API_BACKEND::ONTOLOGY::Dataset && ObjectTypeGroup && Discovery', () => {
+describe(' ONTOLOGY::Dataset && ObjectTypeGroup && Discovery', () => {
+    beforeEach(() => {
+        allure.epic("Ontology");
+        allure.feature("Dataset && ObjectTypeGroup && Discovery API Tests");
+        allure.owner("QA Team");
+      
+    });
     describe('Use-cases for DataSet', () => {
+        allure.feature('DataSet Api tests');
 
         it('1.1 - Get: Valid Request | DataSet', async () => {
-            allure.feature('DataSet');
             allure.story('Get dataset with valid ID');
             allure.description('Fetches a DataSet using valid dataset and project ID.');
     
@@ -70,46 +76,54 @@ describe('API_BACKEND::ONTOLOGY::Dataset && ObjectTypeGroup && Discovery', () =>
     
         it('1.3 - Get: Missing DataSetId | DataSet', async () => {
             allure.story('Missing DataSetId');
-    
+            allure.description('Validate error when DataSetId is not provided.');
+
             response = await getDataSet(null, en.project1Id);
             allure.attachment("Error Response", response.json, { contentType: allure.ContentType.JSON });
-    
+
             expect(response.statusCode).toBe(400);
             expect(response.json.errors).toEqual({'id': ['The id field is required.']});
         });
     
         it('1.4 - Get: Invalid DataSetId | DataSet', async () => {
             allure.story('Invalid DataSetId');
-    
+            allure.description('Validate error when an invalid DataSetId is provided.');
+
             response = await getDataSet(en.invalidID, en.project1Id);
             allure.attachment("Error Response", response.json, { contentType: allure.ContentType.JSON });
-    
+
             expect(response.statusCode).toBe(400);
             expect(response.json.errors).toEqual({'': ['Resource invalid-id not found']});
         });
     
         it('1.5 - Get: Non-Existent DataSetId | DataSet', async () => {
             allure.story('Non-existent DataSetId');
-    
+            allure.description('Validate error when a non-existent DataSetId is provided.');
+
             response = await getDataSet(en.nonExistentID, en.project1Id);
             allure.attachment("Error Response", response.json, { contentType: allure.ContentType.JSON });
-    
+
             expect(response.statusCode).toBe(400);
             expect(response.json.errors).toEqual({'': ['Resource z281a5d4-ecf4-47e2-ba45-a76f6ba6ba0z not found']});
         });
     
         it('1.6 - Get: Non-Existent ProjectId | DataSet', async () => {
             allure.story('Non-existent ProjectId');
-    
+            allure.description('Validate error when a non-existent ProjectId is provided.');
+
             response = await getDataSet(en.dataSet1Id, en.nonExistentID);
             allure.attachment("Error Response", response.json, { contentType: allure.ContentType.JSON });
-    
+
             expect(response.statusCode).toBe(400);
             expect(response.json.errors).toEqual({'': ['Project not found with id: z281a5d4-ecf4-47e2-ba45-a76f6ba6ba0z']});
         });
-    
+
+    });
+
+    describe('DataSet/preview Api tests', () => {
+        allure.feature('DataSet Preview Api tests');
+
         it('2.1 - Preview: Valid Request | DataSet/preview', async () => {
-            allure.feature('DataSet Preview');
             allure.story('Valid Preview');
             response = await previewDataSet(en.dataSet1Id, en.project1Id);
             allure.attachment("Preview Response", response.json, { contentType: allure.ContentType.JSON });
@@ -119,28 +133,31 @@ describe('API_BACKEND::ONTOLOGY::Dataset && ObjectTypeGroup && Discovery', () =>
     
         it('2.2 - Preview: Missing ProjectId | DataSet/preview', async () => {
             allure.story('Preview missing ProjectId');
-    
+            allure.description('Validate error when ProjectId is missing in the preview request.');
+
             response = await previewDataSet(en.dataSet1Id, null);
             allure.attachment("Error", response.json, { contentType: allure.ContentType.JSON });
-    
+
             expect(response.statusCode).toBe(400);
         });
     
         it('2.3 - Preview: Missing DataSetId | DataSet/preview', async () => {
             allure.story('Preview missing DataSetId');
-    
+            allure.description('Validate error when DataSetId is missing in the preview request.');
+
             response = await previewDataSet(null, en.project1Id);
             allure.attachment("Error", response.json, { contentType: allure.ContentType.JSON });
-    
+
             expect(response.statusCode).toBe(400);
         });
     
         it('2.4 - Preview: Invalid DataSetId | DataSet/preview', async () => {
             allure.story('Preview invalid DataSetId');
-    
+            allure.description('Validate error when an invalid DataSetId is provided in the preview request.');
+
             response = await previewDataSet(en.invalidID, en.project1Id);
             allure.attachment("Error", response.json, { contentType: allure.ContentType.JSON });
-    
+
             expect(response.statusCode).toBe(400);
         });
     
@@ -173,10 +190,11 @@ describe('API_BACKEND::ONTOLOGY::Dataset && ObjectTypeGroup && Discovery', () =>
             expect(response.statusCode).toBe(200);
         });
     });
+
     describe('Use-cases for ObjectTypeGroup', () => {
+        allure.feature('ObjectTypeGroup Api tests');
 
         it('3.1 - Pagination: Valid Request | getWithPagination', async () => {
-            allure.feature('ObjectTypeGroup');
             allure.story('Pagination - valid');
             allure.description('Fetches the first page of OTG pagination with default size');
             
@@ -192,20 +210,22 @@ describe('API_BACKEND::ONTOLOGY::Dataset && ObjectTypeGroup && Discovery', () =>
     
         it('3.2 - Pagination: Missing ProjectId | getWithPagination', async () => {
             allure.story('Pagination - missing projectId');
-    
+            allure.description('Validate behavior when ProjectId is missing in the pagination request.');
+
             response = await getOTGWithPagination('');
             allure.attachment("Response", JSON.stringify(response.body), { contentType: 'application/json' });
-    
+
             expect(response.statusCode).toBe(200);
             expect(response.body.pageNumber).toBe(1);
         });
     
         it('3.3 - Pagination: Invalid Pagination with negative value | getWithPagination', async () => {
             allure.story('Pagination - invalid page number');
-    
+            allure.description('Validate error when a negative page number is provided in the pagination request.');
+
             response = await getOTGWithPagination(en.project1Id, -1);
             allure.attachment("Validation Error", JSON.stringify(response.body), { contentType: 'application/json' });
-    
+
             expect(response.statusCode).toBe(400);
             expect(response.body.errors).toEqual({
                 'PageNumber': ['PageNumber at least greater than or equal to 1.']
@@ -214,31 +234,31 @@ describe('API_BACKEND::ONTOLOGY::Dataset && ObjectTypeGroup && Discovery', () =>
     
         it('3.4 - Pagination: Empty Dataset | getWithPagination', async () => {
             allure.story('Pagination - project with no OTG');
-    
+            allure.description('Validate behavior when the project has no ObjectTypeGroups.');
+
             response = await getOTGWithPagination(en.project2Id);
             allure.attachment("Response", JSON.stringify(response.body), { contentType: 'application/json' });
-    
+
             expect(response.statusCode).toBe(200);
             expect(response.body.totalCount ?? 0).toBeGreaterThanOrEqual(0);
         });
     
         it('3.5 - Pagination: Search by Term | getWithPagination', async () => {
             allure.story('Pagination - search');
-    
+            allure.description('Validate behavior when searching for a term in the pagination request.');
+
             response = await getOTGWithPagination(en.project1Id, 1, 10, 'NoFoundDataSet');
             allure.attachment("Search Result", JSON.stringify(response.body), { contentType: 'application/json' });
-    
+
             expect(response.statusCode).toBe(200);
             expect(response.body.items).toEqual([]);
         });
-    
-        // ...
     });
-    
+
     describe('Use-cases for Discovery', () => {
+        allure.feature('Discovery Api tests');
 
         it('9.1 - Get: Valid Request | Discovery', async () => {
-            allure.feature('Discovery');
             allure.story('Valid search overview');
             allure.description('Should return valid overview counts for search term "test"');
     
@@ -263,14 +283,14 @@ describe('API_BACKEND::ONTOLOGY::Dataset && ObjectTypeGroup && Discovery', () =>
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe('One or more validation errors occurred.');
             expect(response.json.errors).toEqual({
-                '': [`Project not found with id: ${en.invalidID}`]
-            });
+                '': [`Project not found with id: ${en.invalidID}`]});
         
         });
     });
     describe('Use-cases for Schema', () => {
+        allure.feature('Schema validation Api tests');
+
         it('10.1 - Get: Valid Request | Schema', async () => {
-            allure.feature('Schema');
             allure.story('Get value types');
             allure.description('Returns all available value types from the system');
     
@@ -291,4 +311,4 @@ describe('API_BACKEND::ONTOLOGY::Dataset && ObjectTypeGroup && Discovery', () =>
             ]);
         });
     });
-})
+    });

@@ -13,7 +13,7 @@ const environment = {
 };
 
 
-describe("API_BACKEND::INSTABI::ANALYSIS", () => {
+describe(" INSTABI::ANALYSIS", () => {
     beforeEach(() => {
         allure.epic("Instabi");
         allure.feature("Analysis API Tests");
@@ -27,7 +27,7 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Create Analysis with valid data");
             allure.description("This test validates successful creation of an analysis with valid inputs.");
             allure.label("layer", "api");
-            allure.tag("positive");
+           
 
             const response = await createAnalysis({
                 projectId: environment.validProjectID,
@@ -78,7 +78,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Create Analysis with invalid ProjectId");
             allure.description("This test checks behavior when invalid ProjectId is used.");
             allure.label("layer", "api");
-            allure.tag("negative");
 
             const response = await createAnalysis({
                 projectId: environment.invalidProjectID,
@@ -103,7 +102,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Create Analysis without Name");
             allure.description("This test validates error handling when name field is empty.");
             allure.label("layer", "api");
-            allure.tag("negative");
 
             const response = await createAnalysis({
                 projectId: environment.validProjectID,
@@ -152,7 +150,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Create Analysis with duplicate name");
             allure.description("This test ensures the system throws error on duplicate analysis name.");
             allure.label("layer", "api");
-            allure.tag("negative");
 
             const response = await createAnalysis({
                 projectId: environment.validProjectID,
@@ -180,7 +177,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Update Analysis with valid data");
             allure.description("This test verifies successful update of an existing analysis with valid input.");
             allure.label("layer", "api");
-            allure.tag("positive");
     
             if (!environment.analysisID) {
                 throw new Error("❌ Analysis ID is undefined! Cannot update.");
@@ -210,7 +206,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Update Analysis without ProjectId");
             allure.description("This test validates that ProjectId is required for updating analysis.");
             allure.label("layer", "api");
-            allure.tag("negative");
     
             const response = await updateAnalysis("", environment.analysisID, {
                 projectId: "",
@@ -236,7 +231,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Update Analysis with invalid ProjectId");
             allure.description("This test checks error handling for update with an invalid ProjectId.");
             allure.label("layer", "api");
-            allure.tag("negative");
     
             const response = await updateAnalysis("invalid-project-id", environment.analysisID, {
                 projectId: "invalid-project-id",
@@ -278,7 +272,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Update Analysis with duplicate name");
             allure.description("This test checks name uniqueness during analysis update.");
             allure.label("layer", "api");
-            allure.tag("negative");
     
             const response = await updateAnalysis(environment.validProjectID, environment.analysisID, {
                 projectId: environment.validProjectID,
@@ -308,7 +301,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Get analysis by valid ID");
             allure.description("This test validates successful retrieval of an analysis by ID.");
             allure.label("layer", "api");
-            allure.tag("positive");
     
             const response = await getAnalysis(environment.validProjectID, environment.analysisID);
     
@@ -325,7 +317,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Get analysis with invalid ProjectID");
             allure.description("This test validates error response when an invalid ProjectID is used.");
             allure.label("layer", "api");
-            allure.tag("negative");
     
             const response = await getAnalysis(environment.invalidProjectID, environment.analysisID);
     
@@ -342,7 +333,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Get analysis with invalid AnalysisID");
             allure.description("This test ensures error is returned when an invalid analysis ID is used.");
             allure.label("layer", "api");
-            allure.tag("negative");
     
             const response = await getAnalysis(environment.invalidProjectID, environment.invalidAnalysisID);
     
@@ -359,7 +349,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Get analysis without AnalysisID");
             allure.description("This test validates error when no analysis ID is provided.");
             allure.label("layer", "api");
-            allure.tag("negative");
     
             const response = await getAnalysis(environment.invalidProjectID, "");
     
@@ -376,7 +365,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Get analysis without ProjectID");
             allure.description("This test validates error when no project ID is provided.");
             allure.label("layer", "api");
-            allure.tag("negative");
     
             const response = await getAnalysis("", environment.invalidAnalysisID);
     
@@ -397,7 +385,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Delete analysis using valid ID");
             allure.description("This test deletes an analysis using a valid project and analysis ID.");
             allure.label("layer", "api");
-            allure.tag("positive");
     
             await deleteAnalysis(environment.validProjectID, environment.analysisID);
     
@@ -409,7 +396,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Delete analysis with valid ProjectId and AnalysisId");
             allure.description("This test ensures deletion of analysis with correct inputs works as expected.");
             allure.label("layer", "api");
-            allure.tag("positive");
     
             const response = await deleteAnalysis(environment.validProjectID, environment.analysisID);
     
@@ -424,7 +410,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Delete analysis with invalid ProjectId");
             allure.description("This test checks error handling for invalid project ID on delete.");
             allure.label("layer", "api");
-            allure.tag("negative");
     
             const response = await deleteAnalysis("invalid-project-id", environment.analysisID);
     
@@ -441,7 +426,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Delete analysis with invalid AnalysisId");
             allure.description("This test checks error response when trying to delete a non-existent analysis.");
             allure.label("layer", "api");
-            allure.tag("negative");
     
             const response = await deleteAnalysis(environment.validProjectID, "invalid-analysis-id");
     
@@ -459,7 +443,6 @@ describe("API_BACKEND::INSTABI::ANALYSIS", () => {
             allure.story("Delete analysis without AnalysisId");
             allure.description("This test checks behavior when analysis ID is not provided in delete request.");
             allure.label("layer", "api");
-            allure.tag("negative");
     
             const response = await deleteAnalysis(environment.validProjectID, "");
     
