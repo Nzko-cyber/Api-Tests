@@ -35,6 +35,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { PageSize: 10, PageNumber: 1 },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(200);
@@ -51,6 +56,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { PageSize: 1000, PageNumber: 1 },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(200);
@@ -66,6 +76,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { PageSize: 10, PageNumber: 0 },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(400);
@@ -83,6 +98,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { PageSize: 10, PageNumber: 9999 },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(200);
@@ -98,6 +118,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { OrderBy: "name", OrderType: "asc" },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(200);
@@ -113,6 +138,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { SearchResourceType: "Apps" },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(200);
@@ -127,6 +157,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { SearchResourceType: "Datasets" },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(200);
@@ -141,6 +176,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { SearchResourceType: "Files" },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(200);
@@ -157,6 +197,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { SearchResourceType: "ObjectTypes" },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(200);
@@ -172,6 +217,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { SearchTerm: "test" },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(200);
@@ -188,6 +238,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { PageSize: "abc", PageNumber: "xyz" },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(400);
@@ -204,6 +259,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { PageSize: -100, PageNumber: -100 },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(400);
@@ -219,6 +279,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { SearchTerm: "t".repeat(51) },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(400);
@@ -248,6 +313,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { PageSize: 10, PageNumber: 1 },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(200);
@@ -267,6 +337,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { PageSize: 1000, PageNumber: 1 },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(200);
@@ -283,6 +358,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { PageSize: 10, PageNumber: 0 },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(400);
@@ -300,6 +380,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { PageSize: 10, PageNumber: 9999 },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(200);
@@ -315,6 +400,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { OrderBy: "date", OrderType: "desc" },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(200);
@@ -330,6 +420,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { SearchTerm: "update" },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(200);
@@ -345,6 +440,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { PageSize: "abc", PageNumber: "xyz" },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(400);
@@ -367,6 +467,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 { PageSize: 10, PageNumber: 1 },
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response.headers).toBeDefined();
             expect(response.headers["content-type"]).toBe(
@@ -391,6 +496,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
             );
 
             const response = await getResourceUsages(resourceId, projectId);
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(200);
@@ -407,6 +517,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
             );
 
             const response = await getResourceUsages("", projectId);
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(400);
@@ -422,6 +537,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 "invalid-resource-id",
                 projectId,
             );
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response).toBeDefined();
             expect(response.statusCode).toBe(400);
@@ -434,6 +554,11 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
             );
 
             const response = await getResourceUsages(resourceId, projectId);
+            
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
 
             expect(response.headers).toBeDefined();
             expect(response.headers["content-type"]).toBe(
@@ -459,6 +584,10 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 validResourceId,
                 validName,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(204);
             console.log(`Updated Resource Name: ${response.body.name}`);
         });
@@ -474,6 +603,10 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 validResourceId,
                 validName,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
         });
 
@@ -488,6 +621,10 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 validResourceId,
                 validName,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
         });
 
@@ -502,6 +639,10 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 "",
                 validName,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
         });
 
@@ -516,6 +657,10 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 invalidResourceId,
                 validName,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
         });
 
@@ -530,6 +675,10 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 validResourceId,
                 emptyName,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
         });
 
@@ -544,6 +693,10 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
                 validResourceId,
                 longName,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
         });
 

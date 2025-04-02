@@ -16,6 +16,12 @@ let en: any = {
 
 let response: any = null;
 
+function safeString(value: any): string {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    return String(value);
+}
+
 describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
     beforeEach(() => {
         allure.epic("Project");
@@ -32,6 +38,10 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             );
 
             response = await getProjectWithPagination(null, 1, 10);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body.pageNumber).toBe(1);
             expect(response.body.pageSize).toBe(10);
@@ -48,6 +58,10 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             );
 
             response = await getProjectWithPagination(null, -1, 10);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -64,6 +78,10 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             );
 
             response = await getProjectWithPagination(null, 100000, 10);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body.pageNumber).toBe(100000);
             expect(response.body.pageSize).toBe(10);
@@ -76,6 +94,10 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             );
 
             response = await getProjectWithPagination(null, 1, -5);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -100,6 +122,10 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 null,
                 { PageSi: 15 },
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body.pageNumber).toBe(1);
             expect(response.body.pageSize).toBe(20);
@@ -120,6 +146,10 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 null,
                 { PageSize: -5 },
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -134,8 +164,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API fails when the NamespaceId is invalid.",
             );
-
+            allure.parameter("NamespaceId", en.invalidID);
             response = await getProjectWithPagination(en.invalidID, 1, 10);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -157,11 +191,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
 
             en.project1Name = randomString(15);
             en.project1Description = randomString(50);
+            allure.parameter("Project Name", en.project1Name);
+            allure.parameter("Project Description", en.project1Description);
             response = await createProject(
                 en.project1Name,
                 en.project1Description,
                 en.namespace1ID,
             );
+            expect(response.statusCode).toBe(200);
             en.project1Id = response.body;
         });
 
@@ -176,6 +213,10 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 en.project1Description,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -196,6 +237,10 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 en.project1Description,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -218,6 +263,10 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 en.project1Description,
                 null,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -235,11 +284,17 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 "This test verifies that the API fails to create a project when the NamespaceId is invalid.",
             );
 
+            allure.parameter("NamespaceId", en.invalidID);
+
             response = await createProject(
                 en.project1Name,
                 en.project1Description,
                 en.invalidID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -258,11 +313,16 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             );
 
             en.project2Name = randomString(15);
+            allure.parameter("Project Name", en.project2Name);
             response = await createProject(
                 en.project2Name,
                 null,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             en.project2Id = response.body;
         });
 
@@ -279,6 +339,10 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 randomString(50),
                 en.namespace2ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             en.project3Id = response.body;
         });
@@ -296,6 +360,10 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 null,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -318,6 +386,10 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 null,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -337,11 +409,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
 
             en.project4Name = randomString(3);
             en.project4Description = randomString(50);
+            allure.parameter("Project Name", en.project4Name);
+            allure.parameter("Project Description", en.project4Description);
             response = await createProject(
                 en.project4Name,
                 en.project4Description,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
             en.project4Id = response.body;
         });
 
@@ -355,11 +430,17 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
 
             en.project5Name = randomString(50);
             en.project5Description = randomString(50);
+            allure.parameter("Project Name", en.project5Name);
+            allure.parameter("Project Description", en.project5Description);
             response = await createProject(
                 en.project5Name,
                 en.project5Description,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             en.project5Id = response.body;
         });
 
@@ -371,11 +452,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 "This test verifies that the API fails to create a project when the name exceeds 50 characters.",
             );
 
-            response = await createProject(
-                randomString(51),
-                null,
-                en.namespace1ID,
-            );
+            const name = randomString(51);
+            allure.parameter("Project Name", name);
+            response = await createProject(name, null, en.namespace1ID);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -393,11 +477,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 "This test verifies that the API fails to create a project when the name contains special characters.",
             );
 
-            response = await createProject(
-                "!@#$%" + randomString(6),
-                null,
-                en.namespace1ID,
-            );
+            const name = "!@#$%" + randomString(6);
+            allure.parameter("Project Name", name);
+            response = await createProject(name, null, en.namespace1ID);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -415,11 +502,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 "This test verifies that the API fails to create a project when the name starts with a number.",
             );
 
-            response = await createProject(
-                "1" + randomString(6),
-                null,
-                en.namespace1ID,
-            );
+            const name = "1" + randomString(6);
+            allure.parameter("Project Name", name);
+            response = await createProject(name, null, en.namespace1ID);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -438,8 +528,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API can retrieve a valid project successfully.",
             );
+            allure.parameter("Project ID", en.project1Id);
 
             response = await getProject(en.project1Id);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(200);
             expect(response.body.id).toBe(en.project1Id);
             expect(response.body.name).toBe(en.project1Name);
@@ -452,8 +548,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API fails with a non-existent ProjectId.",
             );
+            allure.parameter("Project ID", en.nonExistentID);
 
             response = await getProject(en.nonExistentID);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -468,8 +570,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API fails with an invalid ProjectId.",
             );
+            allure.parameter("Project ID", en.invalidID);
 
             response = await getProject(en.invalidID);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -484,8 +592,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API fails when the ProjectId is missing.",
             );
+            allure.parameter("Project ID", String(null));
 
             response = await getProject(null);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -500,8 +614,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API can retrieve a project with an empty description.",
             );
+            allure.parameter("Project ID", en.project2Id);
 
             response = await getProject(en.project2Id);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(200);
             expect(response.body.id).toBe(en.project2Id);
             expect(response.body.name).toBe(en.project2Name);
@@ -518,15 +638,21 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API can update a project with valid inputs.",
             );
+            allure.parameter("Project ID", en.project1Id);
+            allure.parameter("Project Name", en.project1Name);
+            allure.parameter("Project Description", en.project1Description);
 
-            en.project1Name = randomString(15);
-            en.project1Description = randomString(50);
             response = await updateProject(
                 en.project1Id,
                 en.project1Name,
                 en.project1Description,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(200);
             expect(response.body).toBe(true);
         });
@@ -536,8 +662,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API can verify the updated project.",
             );
+            allure.parameter("Project ID", en.project1Id);
 
             response = await getProject(en.project1Id);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(200);
             expect(response.body.id).toBe(en.project1Id);
             expect(response.body.name).toBe(en.project1Name);
@@ -550,6 +682,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API fails to update with a non-existent ProjectId.",
             );
+            allure.parameter("Project ID", en.nonExistentID);
 
             response = await updateProject(
                 en.nonExistentID,
@@ -557,6 +690,11 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 en.project1Description,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -571,6 +709,8 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API fails to update when the project name is empty.",
             );
+            allure.parameter("Project ID", en.project1Id);
+            allure.parameter("Project Name", "null");
 
             response = await updateProject(
                 en.project1Id,
@@ -578,6 +718,11 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 en.project1Description,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -594,6 +739,9 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API can successfully update a project with an empty description.",
             );
+            allure.parameter("Project ID", en.project3Id);
+            allure.parameter("Project Name", en.project2Name);
+            allure.parameter("Project Description", "null");
 
             response = await updateProject(
                 en.project3Id,
@@ -601,6 +749,11 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 null,
                 en.namespace2ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(200);
         });
 
@@ -609,8 +762,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API can verify the project with an empty description.",
             );
+            allure.parameter("Project ID", en.project3Id);
 
             response = await getProject(en.project3Id);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(200);
             expect(response.body.id).toBe(en.project3Id);
             expect(response.body.name).toBe(en.project2Name);
@@ -625,6 +784,8 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API fails to update when the project name is less than 3 characters.",
             );
+            allure.parameter("Project ID", en.project4Id);
+            allure.parameter("Project Name", randomString(2));
 
             response = await updateProject(
                 en.project4Id,
@@ -632,6 +793,11 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 null,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -646,15 +812,20 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API can update a project with a name of 3 characters.",
             );
+            allure.parameter("Project ID", en.project4Id);
+            allure.parameter("Project Name", en.project4Name);
 
-            en.project4Name = randomString(3);
-            en.project4Description = randomString(50);
             response = await updateProject(
                 en.project4Id,
                 en.project4Name,
                 en.project4Description,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(200);
         });
 
@@ -665,8 +836,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API can verify the updated project with a 3-character name.",
             );
+            allure.parameter("Project ID", en.project4Id);
 
             response = await getProject(en.project4Id);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(200);
             expect(response.body.id).toBe(en.project4Id);
             expect(response.body.name).toBe(en.project4Name);
@@ -679,15 +856,20 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API can update a project with a name of 50 characters.",
             );
+            allure.parameter("Project ID", en.project5Id);
+            allure.parameter("Project Name", en.project5Name);
 
-            en.project5Name = randomString(50);
-            en.project5Description = randomString(50);
             response = await updateProject(
                 en.project5Id,
                 en.project5Name,
                 en.project5Description,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(200);
         });
 
@@ -698,8 +880,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API can verify the updated project with a 50-character name.",
             );
+            allure.parameter("Project ID", en.project5Id);
 
             response = await getProject(en.project5Id);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(200);
             expect(response.body.id).toBe(en.project5Id);
             expect(response.body.name).toBe(en.project5Name);
@@ -714,6 +902,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API fails to update when the project name exceeds 50 characters.",
             );
+            allure.parameter("Project ID", en.project5Id);
 
             response = await updateProject(
                 en.project5Id,
@@ -721,6 +910,11 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 null,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -737,6 +931,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API fails to update when the project name contains special characters.",
             );
+            allure.parameter("Project ID", en.project5Id);
 
             response = await updateProject(
                 en.project5Id,
@@ -744,6 +939,11 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 null,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -760,13 +960,19 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API fails to update when the project name starts with a number.",
             );
+            allure.parameter("Project ID", en.project5Id);
 
             response = await updateProject(
                 en.project5Id,
-                "1" + randomString(6),
+                "12" + randomString(10),
                 null,
                 en.namespace1ID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -785,8 +991,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API can delete a valid project successfully.",
             );
+            allure.parameter("Project ID", en.project1Id);
 
             response = await deleteProject(en.project1Id);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(204);
         });
 
@@ -795,8 +1007,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API can verify the deletion of the valid project.",
             );
+            allure.parameter("Project ID", en.project1Id);
 
             response = await getProject(en.project1Id);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -811,8 +1029,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API fails to delete with a non-existent ProjectId.",
             );
+            allure.parameter("Project ID", en.nonExistentID);
 
             response = await deleteProject(en.nonExistentID);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -827,8 +1051,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API fails to delete with an invalid ProjectId.",
             );
+            allure.parameter("Project ID", en.invalidID);
 
             response = await deleteProject(en.invalidID);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -843,8 +1073,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
             allure.description(
                 "This test verifies that the API fails to delete when the ProjectId is missing.",
             );
+            allure.parameter("Project ID", String(null));
 
             response = await deleteProject(null);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
+
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -860,14 +1096,21 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
                 "This test verifies that the API can delete all specified namespaces successfully.",
             );
 
-            response = await deleteProject(en.project2Id);
-            expect(response.statusCode).toBe(204);
-            response = await deleteProject(en.project3Id);
-            expect(response.statusCode).toBe(204);
-            response = await deleteProject(en.project4Id);
-            expect(response.statusCode).toBe(204);
-            response = await deleteProject(en.project5Id);
-            expect(response.statusCode).toBe(204);
+            const projectIds = [
+                en.project2Id,
+                en.project3Id,
+                en.project4Id,
+                en.project5Id,
+            ];
+            for (const projectId of projectIds) {
+                allure.parameter("Project ID", projectId);
+                response = await deleteProject(projectId);
+                allure.parameter("Status Code", String(response.statusCode));
+                allure.attachment("Response Body", response.body || {}, {
+                    contentType: allure.ContentType.JSON,
+                });
+                expect(response.statusCode).toBe(204);
+            }
         });
     });
 });

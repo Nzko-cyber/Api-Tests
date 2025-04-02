@@ -26,6 +26,10 @@ describe("API_BACKEND::PROJECT EXPLORER::ProjectExplorer", () => {
             );
 
             response = await getProjectExplorer(en.project1Id);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body).toHaveProperty("items");
             expect(response.body).toHaveProperty("counts");
@@ -40,6 +44,10 @@ describe("API_BACKEND::PROJECT EXPLORER::ProjectExplorer", () => {
             );
 
             response = await getProjectExplorer(en.invalidID, en.folder1Id);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -58,6 +66,10 @@ describe("API_BACKEND::PROJECT EXPLORER::ProjectExplorer", () => {
             );
 
             response = await getProjectExplorer(en.nonExistentID, en.folder1Id);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -76,6 +88,10 @@ describe("API_BACKEND::PROJECT EXPLORER::ProjectExplorer", () => {
             );
 
             response = await getProjectExplorer(en.project1Id, en.folder1Id);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body).toHaveProperty("items");
             expect(response.body).toHaveProperty("counts");
@@ -90,6 +106,10 @@ describe("API_BACKEND::PROJECT EXPLORER::ProjectExplorer", () => {
             );
 
             response = await getProjectExplorer(en.project1Id, en.invalidID);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -109,6 +129,10 @@ describe("API_BACKEND::PROJECT EXPLORER::ProjectExplorer", () => {
                 en.project1Id,
                 en.nonExistentID,
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -123,6 +147,10 @@ describe("API_BACKEND::PROJECT EXPLORER::ProjectExplorer", () => {
             );
 
             response = await getProjectExplorer(null);
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body).toHaveProperty("items");
             expect(response.body).toHaveProperty("counts");
@@ -135,6 +163,10 @@ describe("API_BACKEND::PROJECT EXPLORER::ProjectExplorer", () => {
             );
 
             response = await getProjectExplorer(en.project1Id, null, "test");
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body).toHaveProperty("items");
             expect(response.body).toHaveProperty("counts");
@@ -153,6 +185,10 @@ describe("API_BACKEND::PROJECT EXPLORER::ProjectExplorer", () => {
                 null,
                 "invalidSearchTerm",
             );
+            allure.parameter("Status Code", String(response.statusCode));
+            allure.attachment("Response Body", response.body || {}, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             expect(response.body).toHaveProperty("items");
             expect(response.body).toHaveProperty("counts");

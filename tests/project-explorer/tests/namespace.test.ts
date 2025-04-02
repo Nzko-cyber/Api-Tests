@@ -949,7 +949,7 @@ describe("Use-cases for Namespace", () => {
             allure.parameter("Namespace ID 2", en.test_namespace2ID);
             allure.parameter("Namespace ID 3", en.test_namespace3ID);
             allure.parameter("Namespace ID 4", en.test_namespace4ID);
-            allure.parameter("Namespace ID 5", en.test_namespacw5ID);
+            allure.parameter("Namespace ID 5", en.test_namespace5ID);
 
             response = await deleteNamespace(en.test_namespace2ID);
             expect(response.statusCode).toBe(204);

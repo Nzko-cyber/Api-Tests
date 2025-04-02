@@ -32,9 +32,15 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             allure.description(
                 "This test case verifies that a folder can be created without a ParentId",
             );
+            allure.tag("positive");
 
             en.folder1Name = randomString(15);
+            allure.parameter("Folder Name", en.folder1Name);
             response = await createFolder(en.folder1Name, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             en.folder1Id = response.body;
         });
@@ -46,11 +52,16 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             en.folder2Name = randomString(15);
+            allure.parameter("Folder Name", en.folder2Name);
             response = await createFolder(
                 en.folder2Name,
                 en.project1Id,
                 en.folder1Id,
             );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment("Response Body", response.body, {
+                contentType: allure.ContentType.JSON,
+            });
             expect(response.statusCode).toBe(200);
             en.folder2Id = response.body;
         });
@@ -62,6 +73,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await createFolder(null, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
         });
 
@@ -72,6 +89,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await createFolder(randomString(15), "");
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
         });
 
@@ -80,11 +103,19 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             allure.description(
                 "This test case verifies that a folder cannot be created with an invalid ParentId",
             );
+            
+            allure.parameter("ParentId", en.invalidID);
 
             response = await createFolder(
                 randomString(15),
                 en.project1Id,
                 en.invalidID,
+            );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
             );
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
@@ -100,6 +131,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await createFolder(en.folder1Name, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -118,6 +155,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await createFolder(en.folder1Name, en.project2Id);
+            allure.parameter("Status Code", response.statusCode);
             expect(response.statusCode).toBe(200);
             en.folder3Id = response.body;
         });
@@ -135,6 +173,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 en.project1Id,
                 en.folder1Id,
             );
+            allure.parameter("Status Code", response.statusCode);
             expect(response.statusCode).toBe(200);
             en.folder4Id = response.body;
         });
@@ -146,6 +185,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await createFolder("");
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
         });
 
@@ -156,6 +201,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await createFolder(randomString(2), en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -174,7 +225,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             en.folder4Name = randomString(3);
+            allure.parameter("Folder Name", en.folder4Name);
             response = await createFolder(en.folder4Name, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(200);
             en.folder5Id = response.body;
         });
@@ -188,7 +246,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             en.folder5Name = randomString(50);
+            allure.parameter("Folder Name", en.folder5Name);
             response = await createFolder(en.folder5Name, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(200);
             en.folder6Id = response.body;
         });
@@ -200,6 +265,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await createFolder(randomString(51), en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -216,7 +287,14 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             en.folder6Name = "@#$%" + randomString(10);
+            allure.parameter("Folder Name", en.folder6Name);
             response = await createFolder(en.folder6Name, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -236,6 +314,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 "12" + randomString(10),
                 en.project1Id,
             );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -254,8 +338,17 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             allure.description(
                 "This test case verifies that a folder without a parent folder can be retrieved",
             );
+            
+            allure.parameter("Folder ID", en.folder1Id);
+            allure.parameter("Project ID", en.project1Id);
 
             response = await getFolder(en.folder1Id, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(200);
             expect(response.body.name).toBe(en.folder1Name);
             expect(response.body.projectId).toBe(en.project1Id);
@@ -270,6 +363,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await getFolder(en.folder2Id, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(200);
             expect(response.body.name).toBe(en.folder2Name);
             expect(response.body.projectId).toBe(en.project1Id);
@@ -284,6 +383,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await getFolder("", en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -298,8 +403,17 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             allure.description(
                 "This test case verifies that a folder cannot be retrieved with an invalid FolderId",
             );
+            
+            allure.parameter("Folder ID", en.invalidID);
+            allure.parameter("Project ID", en.project1Id);
 
             response = await getFolder(en.invalidID, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -314,8 +428,17 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             allure.description(
                 "This test case verifies that a folder cannot be retrieved when it does not exist",
             );
+            
+            allure.parameter("Folder ID", en.nonExistentID);
+            allure.parameter("Project ID", en.project1Id);
 
             response = await getFolder(en.nonExistentID, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -334,6 +457,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await getFolder(en.folder3Id, en.project2Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(200);
             expect(response.body.name).toBe(en.folder1Name);
             expect(response.body.projectId).toBe(en.project2Id);
@@ -350,6 +479,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await getFolder(en.folder4Id, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(200);
             expect(response.body.name).toBe(en.folder1Name);
             expect(response.body.projectId).toBe(en.project1Id);
@@ -364,6 +499,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await getFolder(en.folder1Id, "");
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -384,11 +525,13 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             en.folder1Name = randomString(15);
+            allure.parameter("Folder Name", en.folder1Name);
             response = await updateFolder(
                 en.folder1Id,
                 en.folder1Name,
                 en.project1Id,
             );
+            allure.parameter("Status Code", response.statusCode);
             expect(response.statusCode).toBe(204);
         });
 
@@ -398,6 +541,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 "This test case verifies that the updated folder is valid",
             );
             response = await getFolder(en.folder1Id, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
             expect(response.statusCode).toBe(200);
             expect(response.body.name).toBe(en.folder1Name);
             expect(response.body.projectId).toBe(en.project1Id);
@@ -412,6 +556,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await updateFolder("", en.folder1Name, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -426,11 +576,21 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             allure.description(
                 "This test case verifies that a folder cannot be updated with an invalid FolderId",
             );
+            
+            allure.parameter("Folder ID", en.invalidID);
+            allure.parameter("Project ID", en.project1Id);
+            allure.parameter("Folder Name", en.folder1Name);
 
             response = await updateFolder(
                 en.invalidID,
                 en.folder1Name,
                 en.project1Id,
+            );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
             );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
@@ -446,12 +606,20 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             allure.description(
                 "This test case verifies that a folder cannot be updated with an invalid Parent FolderId",
             );
+            
+            allure.parameter("Parent Folder ID", en.invalidID);
 
             response = await updateFolder(
                 en.folder1Id,
                 en.folder1Name,
                 en.project1Id,
                 en.invalidID,
+            );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
             );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
@@ -467,11 +635,19 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             allure.description(
                 "This test case verifies that a folder cannot be updated with an invalid ProjectId",
             );
+            
+            allure.parameter("Project ID", en.invalidID);
 
             response = await updateFolder(
                 en.folder2Id,
                 en.folder2Name,
                 en.invalidID,
+            );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
             );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
@@ -492,6 +668,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 en.folder6Id,
                 en.folder1Name,
                 en.project1Id,
+            );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
             );
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
@@ -515,6 +697,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 en.folder1Name,
                 en.project2Id,
             );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(204);
         });
 
@@ -531,6 +719,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 en.folder4Name,
                 en.project1Id,
             );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(204);
         });
 
@@ -541,6 +735,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await updateFolder(en.folder1Id, "", en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -560,6 +760,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 en.folder1Id,
                 randomString(2),
                 en.project1Id,
+            );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
             );
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
@@ -582,6 +788,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 en.folder5Name,
                 en.project1Id,
             );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(204);
         });
 
@@ -592,6 +804,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await getFolder(en.folder5Id, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(200);
             expect(response.body.name).toBe(en.folder5Name);
             expect(response.body.projectId).toBe(en.project1Id);
@@ -611,6 +829,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 en.folder6Name,
                 en.project1Id,
             );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(204);
         });
 
@@ -623,6 +847,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await getFolder(en.folder6Id, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(200);
             expect(response.body.name).toBe(en.folder6Name);
             expect(response.body.projectId).toBe(en.project1Id);
@@ -639,6 +869,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 en.folder6Id,
                 randomString(51),
                 en.project1Id,
+            );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
             );
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
@@ -661,6 +897,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 en.folder6Name,
                 en.project1Id,
             );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -680,6 +922,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 en.folder6Id,
                 "12" + randomString(10),
                 en.project1Id,
+            );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
             );
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
@@ -701,6 +949,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await updateFolderParentId(en.folder4Id, en.folder1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(204);
         });
 
@@ -711,6 +965,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await getFolder(en.folder4Id, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(200);
             expect(response.body.name).toBe(en.folder4Name);
             expect(response.body.projectId).toBe(en.project1Id);
@@ -725,6 +985,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await updateFolderParentId("", en.folder1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -739,8 +1005,16 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             allure.description(
                 "This test case verifies that a folder cannot be updated with an invalid FolderId",
             );
+            
+            allure.parameter("Folder ID", en.invalidID);
 
             response = await updateFolderParentId(en.invalidID, en.folder1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -755,8 +1029,16 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             allure.description(
                 "This test case verifies that a folder cannot be updated with an invalid ParentId",
             );
+            
+            allure.parameter("Parent Folder ID", en.invalidID);
 
             response = await updateFolderParentId(en.folder4Id, en.invalidID);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -773,11 +1055,13 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             en.folder1Name = randomString(15);
+            allure.parameter("Folder Name", en.folder1Name);
             response = await updateFolderName(
                 en.folder1Id,
                 en.folder1Name,
                 en.project1Id,
             );
+            allure.parameter("Status Code", response.statusCode);
             expect(response.statusCode).toBe(204);
         });
 
@@ -788,6 +1072,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await getFolder(en.folder1Id, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(200);
             expect(response.body.name).toBe(en.folder1Name);
             expect(response.body.projectId).toBe(en.project1Id);
@@ -808,6 +1098,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 en.folder1Name,
                 en.project1Id,
             );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -827,6 +1123,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 en.folder6Id,
                 en.folder1Name,
                 en.project1Id,
+            );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
             );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
@@ -850,6 +1152,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 randomString(2),
                 en.project1Id,
             );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -866,10 +1174,17 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             en.folder5Name = randomString(3);
+            allure.parameter("Folder Name", en.folder5Name);
             response = await updateFolderName(
                 en.folder5Id,
                 en.folder5Name,
                 en.project1Id,
+            );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
             );
             expect(response.statusCode).toBe(204);
         });
@@ -881,6 +1196,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await getFolder(en.folder5Id, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(200);
             expect(response.body.name).toBe(en.folder5Name);
             expect(response.body.projectId).toBe(en.project1Id);
@@ -910,6 +1231,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await getFolder(en.folder6Id, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );  
             expect(response.statusCode).toBe(200);
             expect(response.body.name).toBe(en.folder6Name);
             expect(response.body.projectId).toBe(en.project1Id);
@@ -930,6 +1257,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 randomString(51),
                 en.project1Id,
             );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -946,10 +1279,17 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             en.folder6Name = "@#$%" + randomString(10);
+            allure.parameter("Folder Name", en.folder6Name);
             response = await updateFolderName(
                 en.folder6Id,
                 en.folder6Name,
                 en.project1Id,
+            );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
             );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
@@ -973,6 +1313,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 "12" + randomString(10),
                 en.project1Id,
             );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -989,6 +1335,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await updateFolderName(en.folder1Id, "", en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -1009,6 +1361,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
                 en.folder1Id,
                 "",
             );
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.body.title).toBe(
                 "One or more validation errors occurred.",
@@ -1028,6 +1386,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await deleteFolder(en.folder6Id, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(204);
         });
 
@@ -1038,6 +1402,12 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await deleteFolder("", en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -1052,8 +1422,16 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             allure.description(
                 "This test case verifies that a folder cannot be deleted with an invalid FolderId",
             );
+            
+            allure.parameter("Folder ID", en.invalidID);
 
             response = await deleteFolder(en.invalidID, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
+            allure.attachment(
+                "Response Body",
+                response.body,
+                { contentType: allure.ContentType.JSON },
+            );
             expect(response.statusCode).toBe(400);
             expect(response.json.title).toBe(
                 "One or more validation errors occurred.",
@@ -1070,6 +1448,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
             );
 
             response = await deleteFolder(en.folder1Id, en.project1Id);
+            allure.parameter("Status Code", response.statusCode);
             expect(response.statusCode).toBe(204);
         });
 
