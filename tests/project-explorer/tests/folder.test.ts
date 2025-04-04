@@ -18,7 +18,7 @@ let en: any = {
 let response: any;
 
 
-describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
+describe("PROJECTEXPLORER::Folder", () => {
     beforeEach(() => {
         allure.epic("Project Explorer");
         allure.feature("Folder API Tests");
@@ -26,8 +26,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
     });
 
     describe("1 - Creating Folder :: Post /project-explorer/api/Folder", () => {
-        allure.story("Folder Creation");
-
+        allure.feature("Folder Creation");
         it("1.1 - Successfully creates a folder without a ParentId", async () => {
             allure.story("Successfully creates a folder without a ParentId");
             allure.description(
@@ -249,7 +248,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
     });
 
     describe("2 - Retrieve Folder :: Get /project-explorer/api/Folder?id={id}", () => {
-        allure.story("Retrieve Folder");
+        allure.feature("Retrieve Folder");
 
         it("2.1 - Retrieves a folder without a parent folder", async () => {
             allure.story("Retrieves a folder without a parent folder");
@@ -377,7 +376,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
     });
 
     describe("3 - Update Folder :: Put /project-explorer/api/Folder", () => {
-        allure.story("Update Folder");
+        allure.feature("Update Folder");
 
         it("3.1 - Updates a folder with valid parameters", async () => {
             allure.story("Updates a folder with valid parameters");
@@ -694,7 +693,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
     });
 
     describe("4 - Update Folder Parent Id And Name :: Put /project-explorer/api/Folder/updateFolder+(ParentId, Name)", () => {
-        allure.story("Update Folder Parent Id And Name");
+        allure.feature("Update Folder Parent Id And Name");
 
         it("4.1 - Updates ParentId with a valid ParentId", async () => {
             allure.story("Updates ParentId with a valid ParentId");
@@ -1022,7 +1021,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Folder", () => {
     });
 
     describe("5 - Delete Folder :: Delete /project-explorer/api/Folder?id={id}", () => {
-        allure.story("Delete Folder");
+        allure.feature("Delete Folder");
         it("5.1 - Deletes a valid folder successfully", async () => {
             allure.story("Deletes a valid folder successfully");
             allure.description(

@@ -16,14 +16,14 @@ let en: any = {
 
 let response: any = null;
 
-describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
+describe("PROJECTEXPLORER::Project", () => {
     beforeEach(() => {
-        allure.epic("Project");
+        allure.epic("Project Explorer");
         allure.feature("Project API Tests");
         allure.owner("QA Team");
     });
     describe("1 - API Tests :: Get with Pagination (GET)", () => {
-        allure.story("Get with Pagination");
+        allure.feature("Get with Pagination");
 
         it("1.1 - Fetches paginated projects with a valid request", async () => {
             allure.story("Fetches paginated projects with a valid request.");
@@ -147,7 +147,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
     });
 
     describe("2 - API Tests :: Create Project (POST)", () => {
-        allure.story("Create Project");
+        allure.feature("Create Project");
 
         it("2.1 - Successfully creates a project with valid inputs", async () => {
             allure.story("Successfully creates a project with valid inputs.");
@@ -431,7 +431,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
     });
 
     describe("3 - API Tests :: Retrieve Project (GET)", () => {
-        allure.story("Retrieve Project");
+        allure.feature("Retrieve Project");
 
         it("3.1 - Retrieves a valid project successfully", async () => {
             allure.story("Retrieves a valid project successfully.");
@@ -511,7 +511,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
     });
 
     describe("4 - API Tests :: Update Project and Check It (PUT)", () => {
-        allure.story("Update Project and Check It");
+        allure.feature("Update Project and Check It");
 
         it("4.1 - Updates a project with valid inputs", async () => {
             allure.story("Updates a project with valid inputs.");
@@ -778,7 +778,7 @@ describe("API_BACKEND::PROJECTEXPLORER::Project", () => {
     });
 
     describe("5 - API Tests :: Delete Project (DELETE)", () => {
-        allure.story("Delete Project");
+        allure.feature("Delete Project");
 
         it("5.1 - Deletes a valid project successfully", async () => {
             allure.story("Deletes a valid project successfully.");

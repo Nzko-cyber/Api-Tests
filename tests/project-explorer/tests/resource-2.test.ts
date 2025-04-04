@@ -43,15 +43,16 @@ async function updateResourceFolderId(
     return newFolderId;
 }
 
-describe("API Tests - Update Resource Folder ID", () => {
+describe("PROJECTEXPLORER::Resource Second half", () => {
     beforeEach(() => {
-        allure.epic("Update Resource Folder ID");
+        allure.epic("Project Explorer");
+        allure.feature(" Resources  API Tests");
         allure.owner("QA Team");
     });
     let originalFolderId: string;
 
     it("✅ Should fetch the current folderId", async () => {
-        allure.story("Fetch the current folderId");
+        allure.feature("Fetch the current folderId");
         allure.description(
             "This test case verifies that the current folderId can be fetched",
         );

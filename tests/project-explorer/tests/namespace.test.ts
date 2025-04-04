@@ -16,14 +16,14 @@ let en: any = {
 
 let response: any = null;
 
-describe("Use-cases for Namespace", () => {
+describe("PROJECTEXPLORER::Namespace", () => {
     beforeEach(() => {
-        allure.epic("Namespace");
+        allure.epic("Project Explorer");
         allure.feature("Namespace API Tests");
         allure.owner("QA Team");
     });
     describe("1 - Pagination :: Get /project-explorer/api/Namespace/getWithPagination", () => {
-        allure.story("Get paginated namespaces");
+        allure.feature("Get paginated namespaces");
 
         it("1.1 - Retrieves paginated namespaces with a valid request", async () => {
             allure.story("Retrieves paginated namespaces with a valid request");
@@ -127,7 +127,7 @@ describe("Use-cases for Namespace", () => {
     });
 
     describe("2 - Creating Namespace :: Post /project-explorer/api/Namespace", () => {
-        allure.story("Create a namespace");
+        allure.feature("Create a namespace");
 
         it("2.1 - Successfully creates a namespace with valid inputs", async () => {
             allure.story("Successfully creates a namespace with valid inputs");
@@ -373,7 +373,7 @@ describe("Use-cases for Namespace", () => {
     });
 
     describe("3 - Retrieve Namespace :: Get /project-explorer/api/Namespace?id={id}", () => {
-        allure.story("Retrieve a namespace");
+        allure.feature("Retrieve a namespace");
 
         it("3.1 - Retrieves a namespace with a valid Namespace ID", async () => {
             allure.story("Retrieves a namespace with a valid Namespace ID");
@@ -491,7 +491,7 @@ describe("Use-cases for Namespace", () => {
     });
 
     describe("4 - Update Namespace :: Put /project-explorer/api/Namespace/{id}", () => {
-        allure.story("Update a namespace");
+        allure.feature("Update a namespace");
 
         it("4.1 - Updates a namespace with a valid request", async () => {
             allure.story("Updates a namespace with a valid request");
@@ -867,7 +867,7 @@ describe("Use-cases for Namespace", () => {
     });
 
     describe("5 - Deleting Namespace :: Delete /project-explorer/api/Namespace/{id}", () => {
-        allure.story("Delete a namespace");
+        allure.feature("Delete a namespace");
 
         it("5.1 - Deletes a namespace with a valid Namespace ID", async () => {
             allure.story("Deletes a namespace with a valid Namespace ID");

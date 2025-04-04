@@ -23,14 +23,14 @@ let en: TestData = {
 
 let response: any;
 
-describe("API_BACKEND::PROJECT EXPLORER::File", () => {
+describe("PROJECT EXPLORER::File", () => {
     beforeEach(() => {
         allure.epic("Project Explorer");
-        allure.feature("Analysis API Tests");
+        allure.feature("Files API Tests");
         allure.owner("QA Team");
     });
     describe("1 - Uploading File :: Post /project-explorer/api/File/upload", () => {
-        allure.story("Upload a file to the project explorer");
+        allure.feature("Uploading file in Project Explorer");
 
         it("1.1 - Upload: Successfully uploads a valid file", async () => {
             allure.story("Successfully uploads a valid file");
@@ -39,7 +39,7 @@ describe("API_BACKEND::PROJECT EXPLORER::File", () => {
             );
 
             response = await uploadFile(en.fileSource, en.project1Id);
-            allure.parameter("HTTP Status", response.statusCode);
+            allure.parameter("HTTP Status", String(response.statusCode));
             allure.attachment("Response Body", response.body, {
                 contentType: allure.ContentType.JSON,
             });
@@ -57,7 +57,7 @@ describe("API_BACKEND::PROJECT EXPLORER::File", () => {
             );
 
             response = await uploadFile(null as any, en.project1Id);
-            allure.parameter("HTTP Status", response.statusCode);
+            allure.parameter("HTTP Status", String(response.statusCode));
             allure.attachment("Response Body", response.body, {
                 contentType: allure.ContentType.JSON,
             });
@@ -77,7 +77,7 @@ describe("API_BACKEND::PROJECT EXPLORER::File", () => {
             );
 
             response = await uploadFile(en.fileSource, en.invalidID);
-            allure.parameter("HTTP Status", response.statusCode);
+            allure.parameter("HTTP Status", String(response.statusCode));
             allure.attachment("Response Body", response.body, {
                 contentType: allure.ContentType.JSON,
             });
@@ -98,7 +98,7 @@ describe("API_BACKEND::PROJECT EXPLORER::File", () => {
                 "tests/sources/1.1-MB-1.jpg",
                 en.project1Id,
             );
-            allure.parameter("HTTP Status", response.statusCode);
+            allure.parameter("HTTP Status", String(response.statusCode));
             allure.attachment("Response Body", response.body, {
                 contentType: allure.ContentType.JSON,
             });
@@ -113,7 +113,7 @@ describe("API_BACKEND::PROJECT EXPLORER::File", () => {
     });
 
     describe("2 - Creating File :: Post /project-explorer/api/File", () => {
-        allure.story("Create a file in the project explorer");
+        allure.feature("Create a file in the project explorer");
 
         it("2.1 - Create: Successfully processes a valid file", async () => {
             allure.story("Successfully processes a valid file");
@@ -127,7 +127,7 @@ describe("API_BACKEND::PROJECT EXPLORER::File", () => {
                 en.project1Id,
                 en.folder1Id,
             );
-            allure.parameter("HTTP Status", response.statusCode);
+            allure.parameter("HTTP Status", String(response.statusCode));
             allure.attachment("Response Body", response.body, {
                 contentType: allure.ContentType.JSON,
             });
@@ -148,7 +148,7 @@ describe("API_BACKEND::PROJECT EXPLORER::File", () => {
                 en.folder1Id,
                 null as any,
             );
-            allure.parameter("HTTP Status", response.statusCode);
+            allure.parameter("HTTP Status", String(response.statusCode));
             allure.attachment("Response Body", response.body, {
                 contentType: allure.ContentType.JSON,
             });
@@ -173,7 +173,7 @@ describe("API_BACKEND::PROJECT EXPLORER::File", () => {
                 en.project1Id,
                 en.folder1Id,
             );
-            allure.parameter("HTTP Status", response.statusCode);
+            allure.parameter("HTTP Status", String(response.statusCode));
             allure.attachment("Response Body", response.body, {
                 contentType: allure.ContentType.JSON,
             });
@@ -196,7 +196,7 @@ describe("API_BACKEND::PROJECT EXPLORER::File", () => {
                 en.invalidID,
                 en.folder1Id,
             );
-            allure.parameter("HTTP Status", response.statusCode);
+            allure.parameter("HTTP Status", String(response.statusCode));
             allure.attachment("Response Body", response.body, {
                 contentType: allure.ContentType.JSON,
             });
@@ -221,7 +221,7 @@ describe("API_BACKEND::PROJECT EXPLORER::File", () => {
                 en.project1Id,
                 en.invalidID,
             );
-            allure.parameter("HTTP Status", response.statusCode);
+            allure.parameter("HTTP Status", String(response.statusCode));
             allure.attachment("Response Body", response.body, {
                 contentType: allure.ContentType.JSON,
             });
@@ -234,7 +234,7 @@ describe("API_BACKEND::PROJECT EXPLORER::File", () => {
     });
 
     describe("3 - Getting File :: Get /project-explorer/api/File/download", () => {
-        allure.story("Get a file from the project explorer");
+        allure.feature("Get a file from the project explorer");
 
         it("3.1 - Get: Successfully retrieves a valid file", async () => {
             allure.story("Successfully retrieves a valid file");
@@ -333,7 +333,7 @@ describe("API_BACKEND::PROJECT EXPLORER::File", () => {
     });
 
     describe("4 - Deleting File :: Delete /project-explorer/api/ProjectExplorer/DeleteResource?id=${id}", () => {
-        allure.story("Deleting a file from the project explorer");
+        allure.feature("Deleting a file from the project explorer");
 
         it("4.1 - Delete: Successfully deletes the first file", async () => {
             allure.story("Successfully deletes the first file");

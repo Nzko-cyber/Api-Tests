@@ -10,14 +10,14 @@ let en = {
 
 let response: any;
 
-describe("API_BACKEND::PROJECT EXPLORER::ProjectExplorer", () => {
+describe("PROJECTEXPLORER::Project", () => {
     beforeEach(() => {
         allure.epic("Project Explorer");
         allure.feature("Project Explorer API Tests");
         allure.owner("QA Team");
     });
     describe("1 - Get ProjectExplorer :: Get /project-explorer/api/ProjectExplorer", () => {
-        allure.story("Get ProjectExplorer");
+        allure.feature("Get ProjectExplorer");
 
         it("1.1 - Retrieves ProjectExplorer with a valid ProjectId", async () => {
             allure.story("Retrieves ProjectExplorer with a valid ProjectId");

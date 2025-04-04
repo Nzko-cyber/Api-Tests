@@ -15,14 +15,14 @@ const longName = "a".repeat(51);
 const sqlInjection = "'; DROP TABLE users; --";
 const xssAttack = "<script>alert('Hacked')</script>";
 
-describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
+describe("PROJECT-EXPLORER::RESOURCE", () => {
     beforeEach(() => {
         allure.epic("Project Explorer");
         allure.feature("Project Explorer API Tests");
         allure.owner("QA Team");
     });
     describe("API Tests - Search Resources (GET)", () => {
-        allure.story("Search Resources");
+        allure.feature("Search Resources");
         const projectId = "79eb5496-9516-4318-ada4-60284b379ed2";
 
         it("✅ Search with basic pagination", async () => {
@@ -234,7 +234,7 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
     });
 
     describe("API Tests - Get Changes Last Week (GET)", () => {
-        allure.story("Get Changes Last Week");
+        allure.feature("Get Changes Last Week");
 
         const projectId = "79eb5496-9516-4318-ada4-60284b379ed2";
 
@@ -379,7 +379,7 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
     });
 
     describe("API Tests - Get Resource Usages (GET)", () => {
-        allure.story("Get Resource Usages");
+        allure.feature("Get Resource Usages");
 
         const projectId = "79eb5496-9516-4318-ada4-60284b379ed2";
         const resourceId = "2db31909-c40a-4177-81ae-7c6c3eae6d69";
@@ -446,7 +446,7 @@ describe("API_BACKEND::PROJECT-EXPLORER::RESOURCE", () => {
     });
 
     describe("API Tests - updateResourceName (PUT)", () => {
-        allure.story("Update Resource Name");
+        allure.feature("Update Resource Name");
         
         it("✅ Update resource name with valid data", async () => {
             allure.story("Update resource name with valid data");
