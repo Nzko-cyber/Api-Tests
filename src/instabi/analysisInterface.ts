@@ -93,3 +93,30 @@ export interface updateDashboardControl {
     settings: string | null;
     features: string | null;
 }
+
+export type Sorting = {
+    order: 'asc' | 'desc';
+    type: 'alphabetical' | 'numerical' | 'custom' | string;
+    condition?: {
+      uniqueName: string;
+      aggregation: string;
+    };
+    members?: { uniqueName: string; alias?: string }[];
+
+  };
+  
+ export type AttributeMemberRequest = {
+    projectId: string;
+    semanticModelId: string;
+    attributeName: string;
+    uniqueName: string;
+    part?: 'year' | 'month' | 'day' | string;
+    type?: 'discrete' | 'continuous' | string;
+    sorting?: Sorting;
+    limit?: {
+      count: number;
+      offset?: number;
+      page?: number;
+    };
+  };
+  
